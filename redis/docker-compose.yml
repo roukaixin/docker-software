@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7.0.8
+    networks:
+      - redis
+    restart: always
+    volumes:
+      - ./data:/data
+      - ./config:/usr/local/etc/redis
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+      - /usr/local/etc/redis/redis.conf
+
+networks:
+  redis:
+    external: true
