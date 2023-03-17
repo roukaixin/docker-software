@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  mysql5.7:
+    image: mysql:5.7.41
+    networks:
+      - "mysql5.7"
+    restart: always
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=密码"
+    command: ["--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci"]
+
+networks: 
+  mysql5.7:
+    external: true
