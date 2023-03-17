@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  gogs:
+    image: gogs/gogs:0.12.10
+    volumes:
+      - ./data:/data
+    ports:
+      - "10022:22"
+      - "3000:3000"
+    networks:
+      - mysql5.7
+#    restart: always
+
+networks:
+  mysql5.7:
+    external: true
