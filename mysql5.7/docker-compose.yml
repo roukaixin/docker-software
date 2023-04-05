@@ -3,7 +3,7 @@ services:
   mysql5.7:
     image: mysql:5.7.41
     networks:
-      - "mysql5.7"
+      - "mysql"
     restart: always
     volumes:
       - ./data:/var/lib/mysql
@@ -14,5 +14,5 @@ services:
     command: ["--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci"]
 
 networks: 
-  mysql5.7:
+  mysql:
     external: true
