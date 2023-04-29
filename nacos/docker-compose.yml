@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  nacos:
+    image: nacos/nacos-server:v2.2.2
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    networks:
+      - nacos
+      - mysql
+    environment:
+      - "MODE=standalone" # 单机运行
+    env_file:
+      - .env
+    restart: always
+
+networks:
+  nacos:
+    external: true
+  mysql:
+    external: true
