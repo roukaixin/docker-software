@@ -17,4 +17,7 @@ docker构建的软件列表
 
 ## redis
  - 使用自定义的 config 配置文件
- - 
+
+## nacos
+ - 单机模式运行
+ - 使用 `mysql` 数据库
