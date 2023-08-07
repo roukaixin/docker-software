@@ -2,6 +2,15 @@
 
 docker构建的软件列表
 
+# cluster(集群)
+## minio
+### 单节点多驱动（伪集群）
+
+### 多节点多驱动
+
+
+# standalone(单机)
+
 ## mysql
  - 使用 8 版本来进行构建容器
  - 使用 group by 来进行分组时，查询的列不在 group by 中，那么就会报错。修改这个配置，使查询的列不必在 group by 中

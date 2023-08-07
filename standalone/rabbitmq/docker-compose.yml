@@ -10,7 +10,7 @@ services:
     environment:
       - "RABBITMQ_DEFAULT_USER=rabbitmq"
     env_file:
-      - ./.env
+      - .env
     networks:
       - rabbitmq
     volumes:
