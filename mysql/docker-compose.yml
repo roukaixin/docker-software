@@ -7,9 +7,10 @@ services:
     volumes:
       - ./data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "127.0.0.1:3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=12345678
+      # 禁用 group by 的严格模式
       - MYSQL_INIT_SQL=SET @@GLOBAL.sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_AUTO_VALUE_ON_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE'
     # 不知道什么原因，使用 5.7.41 的镜像加入资源限制启动不起来
     deploy:
