@@ -24,3 +24,9 @@ docker构建的软件列表
 
 ## clash
  - 容器部署
+
+## v2raya
+ - docker compose 文件
+ - 支持全局透明代理
+
+ **注意：需要注意 v2raya 容器需要获取 root 权限**
