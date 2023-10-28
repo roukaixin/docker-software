@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  v2raya:
+    container_name: v2raya
+    image: mzz2017/v2raya
+    network_mode: host
+    volumes:
+      - ./data:/etc/v2raya
+      - /lib/modules:/lib/modules:ro
+      - /etc/resolv.conf:/etc/resolv.conf
+    privileged: true
+    restart: always
