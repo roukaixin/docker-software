@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  elasticsearch:
+    image: elasticsearch:8.12.2
+    networks:
+      - elastic
+    environment:
+      - "discovery.type=single-node"
+      - "ELASTIC_PASSWORD=12345678"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    # data plugins config logs
+    volumes:
+      - "data:/usr/share/elasticsearch/data"
+      - "./plugins:/usr/share/elasticsearch/plugins"
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+networks:
+  elastic:
+volumes:
+  data:
