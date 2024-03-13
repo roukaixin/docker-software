@@ -10,7 +10,7 @@ services:
     networks:
       - minio
     env_file:
-      - ./.env
+      - .env
 #    ports:
 #      - "9101:9000"
 #      - "9191:9090"
@@ -29,7 +29,7 @@ services:
     networks:
       - minio
     env_file:
-      - ./.env
+      - .env
 #    ports:
 #      - "9102:9000"
 #      - "9192:9090"
