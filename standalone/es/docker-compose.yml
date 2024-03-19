@@ -2,24 +2,26 @@ version: "3.8"
 
 services:
   elasticsearch:
-    image: elasticsearch:8.12.2
-    networks:
-      - elastic
-    environment:
-      - "discovery.type=single-node"
-      - "ELASTIC_PASSWORD=12345678"
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+    container_name: elasticsearch
     ports:
       - "9200:9200"
       - "9300:9300"
-    # data plugins config logs
+    networks:
+      - "elastic"
     volumes:
-      - "data:/usr/share/elasticsearch/data"
+      - "./data:/usr/share/elasticsearch/data"
       - "./plugins:/usr/share/elasticsearch/plugins"
+    environment:
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=false"
+      - "xpack.security.http.ssl.enabled=false"
+      - "xpack.security.transport.ssl.enabled=false"
     deploy:
       resources:
         limits:
           memory: 1g
+
 networks:
   elastic:
-volumes:
-  data:
+    external: true
