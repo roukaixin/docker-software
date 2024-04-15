@@ -13,6 +13,12 @@ docker构建的软件列表
 
 # standalone(单机)
 
+## alist
+
+一个支持多种存储的文件列表程序，使用 Gin 和 Solidjs。
+
+**版本`>=3.25.0，需要设置密码`docker exec -it alist ./alist admin set admin`**
+
 ## mysql
  - 使用 8 版本来进行构建容器
  - 使用 group by 来进行分组时，查询的列不在 group by 中，那么就会报错。修改这个配置，使查询的列不必在 group by 中

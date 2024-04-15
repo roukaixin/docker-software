@@ -9,5 +9,6 @@ services:
       - ./data:/etc/v2raya
       - /lib/modules:/lib/modules:ro
       - /etc/resolv.conf:/etc/resolv.conf
+    environment:
+      - "V2RAYA_NFTABLES_SUPPORT=on"
     privileged: true
-    restart: always
