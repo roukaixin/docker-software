@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   rabbitmq:
     image: rabbitmq:3.11.13-management
@@ -15,7 +13,7 @@ services:
       - rabbitmq
     volumes:
 #      - ./config:/etc/rabbitmq
-      - ./data:/var/lib/rabbitmq
+      - "./data:/var/lib/rabbitmq"
     deploy:
       resources:
         limits:

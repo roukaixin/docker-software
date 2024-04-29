@@ -1,13 +1,12 @@
-version: '3.8'
 services:
     aList:
         image: xhofe/alist-aria2
         container_name: alist
         environment:
-            - PUID=1000
-            - PGID=1000
-            - UMASK=022
+            - "PUID=1000"
+            - "PGID=1000"
+            - "UMASK=022"
         volumes:
-            - ./data:/opt/alist/data
+            - "./data:/opt/alist/data"
         ports:
-            - '5244:5244'
+            - "5244:5244"
