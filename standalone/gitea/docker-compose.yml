@@ -1,6 +1,6 @@
 services:
   server:
-    image: gitea/gitea:1.22.0-rootless
+    image: gitea/gitea:1.22.0
     container_name: gitea
     environment:
       - DB_TYPE=mysql
@@ -9,29 +9,47 @@ services:
       - DB_USER=root
       - DB_PASSWD=12345678
       - USER=${USER}
-      - GITEA__server__SSH_USER=
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__server__BUILTIN_SSH_SERVER_USER=git
+      - GITEA__server__LFS_START_SERVER=true
+      - GITEA__service__ENABLE_CAPTCHA=true
+      - GITEA__service__REQUIRE_CAPTCHA_FOR_LOGIN=true
+      - GITEA__service__CAPTCHA_TYPE=image
+      - GITEA__storage__STORAGE_TYPE=minio
+      - GITEA__storage__MINIO_ENDPOINT=minio:9000
+      - GITEA__storage__MINIO_BUCKET=gitea
+      - GITEA__storage__MINIO_ACCESS_KEY_ID=minio
+      - GITEA__storage__MINIO_SECRET_ACCESS_KEY=12345678
+      - GITEA__repository.upload__FILE_MAX_SIZE=100
+      - GITEA__i18n__LANGS=en-US,zh-CN
+      - GITEA__i18n__NAMES=English,简体中文
+      - GITEA__other__SHOW_FOOTER_VERSION=false
+      - GITEA__other__SHOW_FOOTER_TEMPLATE_LOAD_TIME=false
+      - GITEA__other__SHOW_FOOTER_POWERED_BY=false
+      - GITEA__api__ENABLE_SWAGGER=false
+      - GITEA__service.explore__REQUIRE_SIGNIN_VIEW=true
+      - GITEA__service__REQUIRE_SIGNIN_VIEW=true
+      - GITEA__server__LANDING_PAGE=login
     restart: always
     networks:
       - gitea
       - mysql
+      - minio
     volumes:
-      - ./data:/var/lib/gitea
-      - ./config:/etc/gitea
+      - ./data:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
       - "10880:3000"
       - "10022:2222"
     user: "1000:1000"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "mysql"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
 
 networks:
   gitea:
     external: false
   mysql:
+    external: true
+  minio:
     external: true
