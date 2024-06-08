@@ -1,0 +1,27 @@
+services:
+  minio:
+    image: minio/minio:RELEASE.2023-03-22T06-36-24Z
+    container_name: minio
+    env_file:
+      - .env
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - minio
+    volumes:
+      - "./data:/data"
+    restart: always
+    command:
+      - "server"
+      - "/data"
+      - "--console-address"
+      - ":9001"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+networks:
+  minio:
+    external: true
