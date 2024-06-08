@@ -1,6 +1,6 @@
 services:
-  server:
-    image: gitea/gitea:1.22.0
+  gitea:
+    image: gitea/gitea:1.22.0-rootless
     container_name: gitea
     environment:
       - DB_TYPE=mysql
@@ -28,26 +28,72 @@ services:
       - GITEA__other__SHOW_FOOTER_TEMPLATE_LOAD_TIME=false
       - GITEA__other__SHOW_FOOTER_POWERED_BY=false
       - GITEA__api__ENABLE_SWAGGER=false
-      - GITEA__service.explore__REQUIRE_SIGNIN_VIEW=true
-      - GITEA__service__REQUIRE_SIGNIN_VIEW=true
-      - GITEA__server__LANDING_PAGE=login
+      - GITEA__server__LANDING_PAGE=explore
+      - GITEA__security__INSTALL_LOCK=true
+      - GITEA__server__DOMAIN=127.0.0.1
+      - GITEA__server__ROOT_URL=http://127.0.0.1:10880/
+      - GITEA__server__SSH_PORT=10022
+      - GITEA__server__SSH_LISTEN_PORT=2222
+      - GITEA__time__DEFAULT_UI_LOCATION=Asia/Shanghai
+      - GITEA__repository__USE_COMPAT_SSH_URI=true
+      - GITEA__database__DB_TYPE=mysql
+      - GITEA__database__HOST=mysql:3306
+      - GITEA__database__NAME=gitea
+      - GITEA__database__USER=root
+      - GITEA__database__PASSWD=12345678
     restart: always
+    user: 1000:1000
     networks:
       - gitea
       - mysql
       - minio
     volumes:
-      - ./data:/data
+      - ./data/gitea:/var/lib/gitea
+      - ./config/gitea:/etc/gitea
+      - ./.env:/env/.env:rw
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
       - "10880:3000"
       - "10022:2222"
-    user: "1000:1000"
+    command: /bin/sh -c \
+      "nohup /usr/local/bin/gitea web -c /etc/gitea/app.ini > ~/gitea.log 2>&1 & \
+      sleep 5 && \
+      echo $(/usr/local/bin/gitea --config /etc/gitea/app.ini actions generate-runner-token | tail -n 1) > start && \
+      cat start && \
+      echo GITEA_RUNNER_REGISTRATION_TOKEN= > /env/.env && \
+      sed \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat start)/\" /env/.env > /var/lib/gitea/.env && \
+      rm /var/lib/gitea/start && \
+      cat /var/lib/gitea/.env > /env/.env && \
+      rm /var/lib/gitea/.env && \
+      tail -f ~/gitea.log"
+
+  runner:
+    image: gitea/act_runner:0.2.10
+    container_name: runner
+    env_file:
+      - ./.env
+    environment:
+      - CONFIG_FILE=/config.yaml
+      - GITEA_INSTANCE_URL=http://gitea:3000/
+    volumes:
+      - ./config/runner/config.yaml:/config.yaml:ro
+      - ./data/runner:/data:rw
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - gitea
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    depends_on:
+      - gitea
 
 
 networks:
   gitea:
+    name: gitea
     external: false
   mysql:
     external: true
