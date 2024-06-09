@@ -6,22 +6,23 @@ services:
       - USER=${USER}
       - USER_UID=1000
       - USER_GID=1000
-      - GITEA__server__DOMAIN=127.0.0.1
-      - GITEA__server__SSH_DOMAIN=127.0.0.1:10022
+      - GITEA__server__DOMAIN=${DOMAIN}
+      - GITEA__server__SSH_DOMAIN=${DOMAIN}
       - GITEA__server__HTTP_PORT=3000
-      - GITEA__server__ROOT_URL=http://127.0.0.1:10880/
-      - GITEA__server__SSH_PORT=22
+      - GITEA__server__ROOT_URL=${ROOT_URL}
+      - GITEA__server__SSH_PORT=${SSH_PORT}
+      - GITEA__server__SSH_LISTEN_PORT=${SSH_LISTEN_PORT}
       - GITEA__server__BUILTIN_SSH_SERVER_USER=git
       - GITEA__server__SSH_CREATE_AUTHORIZED_KEYS_FILE=true
       - GITEA__server__LFS_START_SERVER=true
       - GITEA__server__SSH_EXPOSE_ANONYMOUS=true
       - GITEA__server__LANDING_PAGE=explore
       - GITEA__server__OFFLINE_MODE=true
-      - GITEA__database__DB_TYPE=mysql
-      - GITEA__database__HOST=mysql:3306
-      - GITEA__database__NAME=gitea
-      - GITEA__database__USER=root
-      - GITEA__database__PASSWD=12345678
+      - GITEA__database__DB_TYPE=${DB_TYPE}
+      - GITEA__database__HOST=${DB_HOST}
+      - GITEA__database__NAME=${DB_NAME}
+      - GITEA__database__USER=${DB_USER}
+      - GITEA__database__PASSWD=${DB_PASSWD}
       - GITEA__database__LOG_SQL=false
       - GITEA__database__SSL_MODE=false
       - GITEA__security__INSTALL_LOCK=true
@@ -40,11 +41,11 @@ services:
       - GITEA__openid__ENABLE_OPENID_SIGNIN=false
       - GITEA__openid__ENABLE_OPENID_SIGNUP=false
       - GITEA__storage__STORAGE_TYPE=minio
-      - GITEA__storage__MINIO_ENDPOINT=minio:9000
-      - GITEA__storage__MINIO_BUCKET=gitea
-      - GITEA__storage__MINIO_ACCESS_KEY_ID=minio
-      - GITEA__storage__MINIO_SECRET_ACCESS_KEY=12345678
-      - GITEA__repository.upload__FILE_MAX_SIZE=100
+      - GITEA__storage__MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      - GITEA__storage__MINIO_BUCKET=${MINIO_BUCKET}
+      - GITEA__storage__MINIO_ACCESS_KEY_ID=${MINIO_ACCESS_KEY_ID}
+      - GITEA__storage__MINIO_SECRET_ACCESS_KEY=${MINIO_SECRET_ACCESS_KEY}
+      - GITEA__repository.upload__FILE_MAX_SIZE=${UPLOAD_FILE_MAX_SIZE}
       - GITEA__i18n__LANGS=en-US,zh-CN
       - GITEA__i18n__NAMES=English,简体中文
       - GITEA__other__SHOW_FOOTER_VERSION=false
@@ -60,15 +61,15 @@ services:
       - GITEA__repository.signing__DEFAULT_TRUST_MODEL=committer
       - GITEA__mailer__ENABLED=false
     ports:
-      - "10880:3000"
-      - "10022:22"
+      - "${HTTP_PORT}:3000"
+      - "${SSH_PORT}:22"
     networks:
       - gitea
       - mysql
       - minio
     volumes:
       - ./data/gitea:/data
-      - ./.env:/.env:rw
+      - ./.runner_token:/.runner_token:rw
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
@@ -81,10 +82,10 @@ services:
       "nohup /bin/s6-svscan /etc/s6 > ~/gitea.log 2>&1 & \
       while true; do if grep -q \"Starting new Web server\" ~/gitea.log; then echo $(su  tnt -c '/usr/local/bin/gitea actions generate-runner-token' | tail -n 1) > ~/runner_registration_token; break; else sleep 1; fi done && \
       cat ~/runner_registration_token && \
-      echo GITEA_RUNNER_REGISTRATION_TOKEN= > /.env && \
-      sed \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat ~/runner_registration_token)/\" /.env > ~/.env && \
-      cat ~/.env > /.env && \
-      rm ~/.env && \
+      echo GITEA_RUNNER_REGISTRATION_TOKEN= > /.runner_token && \
+      sed \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat ~/runner_registration_token)/\" /.runner_token > ~/.runner_token && \
+      cat ~/.runner_token > /.runner_token && \
+      rm ~/.runner_token && \
       rm ~/runner_registration_token && \
       tail -f ~/gitea.log"
 
@@ -98,7 +99,7 @@ services:
       - ./config/config.yaml:/config.yaml:ro
       - ./data/runner:/data:rw
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./.env:/.env:ro
+      - ./.runner_token:/.runner_token:ro
     networks:
       - gitea
     restart: unless-stopped
@@ -109,7 +110,7 @@ services:
     depends_on:
       gitea:
         condition: service_healthy
-    entrypoint: /bin/sh -c "cat /.env && export $(cat /.env) && /sbin/tini -- /opt/act/run.sh"
+    entrypoint: /bin/sh -c "cat /.env && export $(cat /.runner_token) && /sbin/tini -- /opt/act/run.sh"
 
 networks:
   gitea:
