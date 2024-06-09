@@ -5,11 +5,11 @@ services:
       - "./data:/data"
     ports:
       - "10022:22"
-      - "3000:3000"
+      - "10880:3000"
     networks:
-      - mysql5.7
+      - mysql
 #    restart: always
 
 networks:
-  mysql5.7:
+  mysql:
     external: true
