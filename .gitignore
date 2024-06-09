@@ -3,4 +3,4 @@
 data
 logs
 
-standalone/gitea/config/gitea/app.ini
+standalone/gitea/rootless/config/gitea/app.ini
