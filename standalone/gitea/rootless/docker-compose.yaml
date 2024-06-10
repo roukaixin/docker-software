@@ -38,6 +38,7 @@ services:
       - GITEA__service__DEFAULT_ENABLE_TIMETRACKING=true
       - GITEA__service__REQUIRE_CAPTCHA_FOR_LOGIN=true
       - GITEA__service__CAPTCHA_TYPE=image
+      - GITEA__service.explore__DISABLE_USERS_PAGE=true
       - GITEA__openid__ENABLE_OPENID_SIGNIN=false
       - GITEA__openid__ENABLE_OPENID_SIGNUP=false
       - GITEA__storage__STORAGE_TYPE=minio
@@ -60,12 +61,19 @@ services:
       - GITEA__repository.pull-request__DEFAULT_MERGE_STYLE=merge
       - GITEA__repository.signing__DEFAULT_TRUST_MODEL=committer
       - GITEA__mailer__ENABLED=false
+      - GITEA__cache__ADAPTER=redis
+      - GITEA__cache__HOST=addrs=${REDIS_HOST} password=${REDIS_PASSWORD} db=${REDIS_DB}
+      - GITEA__session__PROVIDER=redis
+      - GITEA__session__PROVIDER_CONFIG=addrs=${REDIS_HOST} password=${REDIS_PASSWORD} db=${REDIS_DB}
+      - GITEA__queue__TYPE=redis
+      - GITEA__queue__CONN_STR=addrs=${REDIS_HOST} password=${REDIS_PASSWORD} db=${REDIS_DB}
     restart: unless-stopped
     user: 1000:1000
     networks:
       - gitea
       - mysql
       - minio
+      - redis
     volumes:
       - ./data/gitea:/var/lib/gitea
       - ./config/gitea:/etc/gitea
@@ -122,4 +130,6 @@ networks:
   mysql:
     external: true
   minio:
+    external: true
+  redis:
     external: true
