@@ -4,3 +4,4 @@ data
 logs
 
 standalone/gitea/rootless/config/gitea/app.ini
+.runner_token
