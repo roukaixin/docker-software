@@ -15,7 +15,6 @@ services:
       - GITEA__server__BUILTIN_SSH_SERVER_USER=git
       - GITEA__server__SSH_CREATE_AUTHORIZED_KEYS_FILE=true
       - GITEA__server__LFS_START_SERVER=true
-      - GITEA__server__SSH_EXPOSE_ANONYMOUS=true
       - GITEA__server__LANDING_PAGE=explore
       - GITEA__server__OFFLINE_MODE=true
       - GITEA__database__DB_TYPE=${DB_TYPE}
