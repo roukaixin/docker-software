@@ -76,7 +76,7 @@ services:
       - redis
     volumes:
       - ./data/gitea:/data
-      - ./.runner_token:/.runner_token:rw
+      - ./token:/token:rw
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
@@ -89,9 +89,10 @@ services:
       "nohup /bin/s6-svscan /etc/s6 > ~/gitea.log 2>&1 & \
       while true; do if grep -q \"Starting new Web server\" ~/gitea.log; then echo $(su  tnt -c '/usr/local/bin/gitea actions generate-runner-token' | tail -n 1) > ~/runner_registration_token; break; else sleep 1; fi done && \
       cat ~/runner_registration_token && \
-      echo GITEA_RUNNER_REGISTRATION_TOKEN= > /.runner_token && \
-      sed \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat ~/runner_registration_token)/\" /.runner_token > ~/.runner_token && \
-      cat ~/.runner_token > /.runner_token && \
+      touch /token/.runner_token && \
+      echo GITEA_RUNNER_REGISTRATION_TOKEN= > /token/.runner_token && \
+      sed \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat ~/runner_registration_token)/\" /token/.runner_token > ~/.runner_token && \
+      cat ~/.runner_token > /token/.runner_token && \
       rm ~/.runner_token && \
       rm ~/runner_registration_token && \
       tail -f ~/gitea.log"
@@ -106,7 +107,7 @@ services:
       - ./config/config.yaml:/config.yaml:ro
       - ./data/runner:/data:rw
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./.runner_token:/.runner_token:ro
+      - ./token:/token:ro
     networks:
       - gitea
     restart: unless-stopped
@@ -117,7 +118,7 @@ services:
     depends_on:
       gitea:
         condition: service_healthy
-    entrypoint: /bin/sh -c "cat /.env && export $(cat /.runner_token) && /sbin/tini -- /opt/act/run.sh"
+    entrypoint: /bin/sh -c "cat /token/.runner_token && export $(cat /token/.runner_token) && /sbin/tini -- /opt/act/run.sh"
 
 networks:
   gitea:
