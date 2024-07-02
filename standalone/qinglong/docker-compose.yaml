@@ -16,4 +16,5 @@ services:
 
 networks:
   qinglong:
+    name: qinglong
     external: false
