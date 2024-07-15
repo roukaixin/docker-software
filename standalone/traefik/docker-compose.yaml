@@ -1,0 +1,38 @@
+services:
+  traefik:
+    image: traefik:v3.1
+    container_name: traefik
+    command:
+      - --api.insecure=true # 开启 web ui 页面
+      - --providers.docker # 监听 docker
+      - --providers.docker.network=proxy
+      - --providers.docker.exposedByDefault=false
+      - --entryPoints.web.address=:80
+      - --entryPoints.web.http.redirections.entrypoint.permanent=true
+      - --entryPoints.web.http.redirections.entrypoint.scheme=https
+      - --entryPoints.web.http.redirections.entrypoint.to=websecure
+      - --entryPoints.websecure.address=:443
+      - --entryPoints.websecure.http.tls=true
+      - --entryPoints.websecure.http.tls.certresolver=ali
+      - --entryPoints.websecure.http.tls.domains[0].main=roukaixin.cloudns.be
+      - --entryPoints.websecure.http.tls.domains[0].sans=*.roukaixin.cloudns.be
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - proxy
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`proxy.roukaixin.cloudns.be`)"
+      - "traefik.http.routers.traefik.entrypoints=web,websecure"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
