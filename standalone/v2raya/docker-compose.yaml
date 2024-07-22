@@ -1,12 +1,11 @@
 services:
   v2raya:
     container_name: v2raya
-    image: mzz2017/v2raya
+    image: mzz2017/v2raya:v2.2.5.7
     network_mode: host
     volumes:
       - ./data:/etc/v2raya
-      - /lib/modules:/lib/modules:ro
-      - /etc/resolv.conf:/etc/resolv.conf
     environment:
       - "V2RAYA_NFTABLES_SUPPORT=on"
     privileged: true
+    restart: unless-stopped
