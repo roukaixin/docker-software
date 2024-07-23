@@ -22,6 +22,6 @@ services:
       - --collation-server=utf8mb4_general_ci
     restart: always
 
-networks: 
+networks:
   mysql:
     external: true
