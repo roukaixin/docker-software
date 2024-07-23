@@ -19,6 +19,7 @@ services:
       - hive
     volumes:
       - ./data:/opt/hive/data/warehouse
+    restart: unless-stopped
 
   metastore:
     image: apache/hive:4.0.0
@@ -44,6 +45,7 @@ services:
         source: ${POSTGRES_LOCAL_PATH}
         target: /opt/hive/lib/mysql.jar
       - ./data:/opt/hive/data/warehouse
+    restart: unless-stopped
 
 networks:
   hive:
