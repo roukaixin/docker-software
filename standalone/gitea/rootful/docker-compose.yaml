@@ -1,6 +1,6 @@
 services:
   gitea:
-    image: gitea/gitea:1.22.0
+    image: gitea/gitea:1.22.1
     container_name: gitea
     environment:
       - USER=${USER}
@@ -91,9 +91,7 @@ services:
       cat ~/runner_registration_token && \
       touch /token/.runner_token && \
       echo GITEA_RUNNER_REGISTRATION_TOKEN= > /token/.runner_token && \
-      sed \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat ~/runner_registration_token)/\" /token/.runner_token > ~/.runner_token && \
-      cat ~/.runner_token > /token/.runner_token && \
-      rm ~/.runner_token && \
+      sed -i \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat ~/runner_registration_token)/\" /token/.runner_token && \
       rm ~/runner_registration_token && \
       tail -f ~/gitea.log"
 
