@@ -1,6 +1,6 @@
 services:
     aList:
-        image: xhofe/alist-aria2
+        image: xhofe/alist-aria2:v3.36.0
         container_name: alist
         environment:
             - "PUID=1000"
@@ -10,3 +10,11 @@ services:
             - "./data:/opt/alist/data"
         ports:
             - "5244:5244"
+        restart: unless-stopped
+        networks:
+            - alist
+
+networks:
+    alist:
+        external: false
+        name: alist
