@@ -2,7 +2,7 @@ services:
   dm:
     image: dm8_single:dm8_20230808_rev197096_x86_rh6_64
     privileged: true
-    restart: always
+    restart: unless-stopped
     volumes:
       - "./data:/opt/dmdbms/data"
     ports:

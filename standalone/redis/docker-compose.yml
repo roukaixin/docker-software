@@ -4,7 +4,7 @@ services:
     container_name: redis
     networks:
       - redis
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./data:/data
       - ./config:/usr/local/etc/redis

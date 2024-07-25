@@ -19,6 +19,7 @@ services:
       resources:
         limits:
           memory: 1g
+    restart: unless-stopped
 
 networks:
   elastic:

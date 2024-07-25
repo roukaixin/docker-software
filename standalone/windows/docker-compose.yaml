@@ -19,3 +19,4 @@ services:
     stop_grace_period: 2m
     volumes:
       - /home/tnt/Desktop:/shared
+    restart: unless-stopped

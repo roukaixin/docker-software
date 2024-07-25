@@ -9,10 +9,7 @@ services:
       - minio
     env_file:
       - ../../../standalone/minio/.env
-#    ports:
-#      - "9101:9000"
-#      - "9191:9090"
-    restart: always
+    restart: unless-stopped
     command:
       - "server"
       - "--console-address"
@@ -28,10 +25,7 @@ services:
       - minio
     env_file:
       - "../../../standalone/minio/.env"
-#    ports:
-#      - "9102:9000"
-#      - "9192:9090"
-    restart: always
+    restart: unless-stopped
     command:
       - "server"
       - "--console-address"
@@ -47,7 +41,7 @@ services:
       - "9001:9001"
     networks:
       - minio
-    restart: always
+    restart: unless-stopped
     depends_on:
       - minio1
       - minio2
