@@ -1,0 +1,17 @@
+services:
+  dm:
+    image: dm8_single:dm8_20240715_rev232765_x86_rh6_64
+    container_name: dm
+    restart: unless-stopped
+    volumes:
+      - "./data:/opt/dmdbms/data"
+    ports:
+      - "127.0.0.1:5236:5236"
+    networks:
+      - dm
+    env_file:
+      - .env
+
+networks:
+  dm:
+    external: true
