@@ -12,3 +12,8 @@ scrcpy -s 127.0.0.1:5555 --audio-codec=raw
 # 安装软件 其中 xxx.apk 是自己下载的 apk 软件
 adb -s 127.0.0.1:5555 "xxx.apk"
 ```
+
+
+libhoudini libndk
+
+https://lbqaq.top/p/redroid-maa/
