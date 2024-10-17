@@ -1,0 +1,17 @@
+services:
+  fedora:
+    image: fedora:42
+    container_name: fedora
+    hostname: fedora
+    tty: true
+    networks:
+      - "linux"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+networks:
+  linux:
+    external: true
