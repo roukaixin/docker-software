@@ -1,0 +1,25 @@
+services:
+  qbittorrent:
+    image: "linuxserver/qbittorrent:5.0.0-r1-ls357"
+    container_name: "qbittorrent"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "WEBUI_PORT=${WEBUI_PORT}"
+      - "TORRENTING_PORT=${TORRENTING_PORT}"
+      - "TZ=Asia/Shanghai"
+    restart: unless-stopped
+    volumes:
+      - "./data:/downloads"
+      - "./config:/config"
+    ports:
+      - "${WEBUI_PORT}:${WEBUI_PORT}"
+      - "${TORRENTING_PORT}:${TORRENTING_PORT}"
+      - "${TORRENTING_PORT}:${TORRENTING_PORT}/udp"
+    networks:
+      - "qbittorrent"
+
+networks:
+  qbittorrent:
+    external: false
+    name: "qbittorrent"
