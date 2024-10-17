@@ -1,0 +1,15 @@
+services:
+  siyuan:
+    image: b3log/siyuan:v3.1.6
+    container_name: "siyuan"
+    user: "${USER_ID}:${GROUP_ID}"
+    ports:
+      - "6806:6806"
+    volumes:
+      - "./data:${WORKSPACE}"
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    command:
+      - '--workspace=${WORKSPACE}/'
+      - '--accessAuthCode=${AUTH_CODE}'
