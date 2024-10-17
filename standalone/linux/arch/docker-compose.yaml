@@ -1,0 +1,14 @@
+services:
+  arch:
+    image: archlinux:multilib-devel
+    container_name: arch
+    hostname: arch
+    tty: true
+    expose:
+      - 5900
+    networks:
+      - linux
+
+networks:
+  linux:
+    external: true
