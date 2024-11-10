@@ -1,6 +1,6 @@
 services:
   gitea:
-    image: gitea/gitea:1.22.2
+    image: gitea/gitea:1.22.3
     container_name: gitea
     environment:
       - USER=${USER}
@@ -96,7 +96,7 @@ services:
       tail -f ~/gitea.log"
 
   runner:
-    image: gitea/act_runner:0.2.10
+    image: gitea/act_runner:0.2.11
     container_name: runner
     environment:
       - CONFIG_FILE=/config.yaml
