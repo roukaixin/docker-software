@@ -1,0 +1,39 @@
+services:
+  aria2:
+    container_name: aria2
+    image: roukaixin/aria2:release-1.37.0
+    environment:
+      CONF_PATH: false
+      LISTEN_PORT: ${LISTEN_PORT}
+      DHT_LISTEN_PORT: ${DHT_LISTEN_PORT}
+      RPC_SECRET: ${RPC_SECRET}
+      RPC_LISTEN_PORT: 6800
+    ports:
+      - "6800:6800"
+      - "${LISTEN_PORT}:${LISTEN_PORT}"
+      - "${DHT_LISTEN_PORT}:${DHT_LISTEN_PORT}/udp"
+    volumes:
+      - "./download:/aria2/download"
+    networks:
+      - aria2
+    restart: unless-stopped
+    dns: 8.8.8.8
+
+  ariang:
+    image: p3terx/ariang
+    container_name: ariang
+    ports:
+      - "6880:6880"
+    logging:
+      options:
+        max-size: 1m
+    networks:
+      - aria2
+    restart: unless-stopped
+    depends_on:
+      - aria2
+
+networks:
+  aria2:
+    name: aria2
+    external: false
