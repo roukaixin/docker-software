@@ -9,3 +9,8 @@ standalone/gitea/rootless/config/gitea/app.ini
 standalone/qbittorrent/config
 
 standalone/aria2/download
+
+# jellyfin
+standalone/jellyfin/cache
+standalone/jellyfin/config
+standalone/jellyfin/media
