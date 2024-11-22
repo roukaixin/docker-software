@@ -7,7 +7,6 @@ services:
       LISTEN_PORT: ${LISTEN_PORT}
       DHT_LISTEN_PORT: ${DHT_LISTEN_PORT}
       RPC_SECRET: ${RPC_SECRET}
-      RPC_LISTEN_PORT: 6800
     ports:
       - "6800:6800"
       - "${LISTEN_PORT}:${LISTEN_PORT}"
