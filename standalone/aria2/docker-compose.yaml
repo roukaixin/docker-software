@@ -34,5 +34,6 @@ services:
 
 networks:
   aria2:
+    attachable: true
     name: aria2
     external: false

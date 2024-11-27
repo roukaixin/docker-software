@@ -1,11 +1,12 @@
 services:
     aList:
-        image: xhofe/alist-aria2:v3.36.0
+        image: xhofe/alist:v3.40.0-ffmpeg
         container_name: alist
         environment:
-            - "PUID=1000"
-            - "PGID=1000"
-            - "UMASK=022"
+            - "PUID=${PUID}"
+            - "PGID=${PGID}"
+            - "UMASK=${UMASK}"
+            - "TZ=Asia/Shanghai"
         volumes:
             - "./data:/opt/alist/data"
         ports:
@@ -13,8 +14,13 @@ services:
         restart: unless-stopped
         networks:
             - alist
+            - aria2
+        dns: 8.8.8.8
 
 networks:
     alist:
         external: false
         name: alist
+    aria2:
+        name: aria2
+        external: true
