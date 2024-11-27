@@ -24,4 +24,6 @@ services:
 
 networks:
   mysql:
-    external: true
+    name: "mysql"
+    attachable: true
+    external: false
