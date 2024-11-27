@@ -24,4 +24,6 @@ services:
 
 networks:
   minio:
-    external: true
+    attachable: true
+    name: "minio"
+    external: false
