@@ -16,7 +16,16 @@ services:
       - "HTTPS_PROXY=http://host.docker.internal:12334"
       - "HTTP_PROXY=http://host.docker.internal:12334"
     extra_hosts:
-      - "host.docker.internal=host-gateway"
+      - "host.docker.internal:host-gateway"
+    user: "${UID}:${GID}"
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+              - driver: nvidia
+                count: all
+                capabilities: [ gpu ]
 
   jellyfin-vue:
     image: "jellyfin/jellyfin-vue:unstable.2024-11-20.2dc321e"
