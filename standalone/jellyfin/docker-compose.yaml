@@ -13,8 +13,8 @@ services:
       - "8096:8096"
     environment:
       - "NO_PROXY=localhost,127.0.0.1"
-      - "HTTPS_PROXY=http://host.docker.internal:12334"
-      - "HTTP_PROXY=http://host.docker.internal:12334"
+      - "HTTPS_PROXY=http://host.docker.internal:${PROXY_PORT}"
+      - "HTTP_PROXY=http://host.docker.internal:${PROXY_PORT}"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     user: "${UID}:${GID}"
