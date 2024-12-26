@@ -3,7 +3,6 @@ services:
     container_name: aria2
     image: roukaixin/aria2:release-1.37.0
     environment:
-      CONF_PATH: false
       LISTEN_PORT: ${LISTEN_PORT}
       DHT_LISTEN_PORT: ${DHT_LISTEN_PORT}
       RPC_SECRET: ${RPC_SECRET}
