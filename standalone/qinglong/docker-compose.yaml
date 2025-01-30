@@ -1,14 +1,14 @@
 services:
   qinglong:
-    image: whyour/qinglong:2.17.6
-    container_name: qinglong
+    image: whyour/qinglong:2.18.1
+    container_name: "qinglong"
     volumes:
-      - ./data/ql:/ql/data
+      - ./data:/ql/data
     ports:
       - "5700:5700"
     restart: unless-stopped
     networks:
-      - qinglong
+      - "qinglong"
     deploy:
       resources:
         limits:
@@ -16,5 +16,5 @@ services:
 
 networks:
   qinglong:
-    name: qinglong
+    name: "qinglong"
     external: false
