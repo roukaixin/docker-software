@@ -27,15 +27,6 @@ services:
                 count: all
                 capabilities: [ gpu ]
 
-  jellyfin-vue:
-    image: "jellyfin/jellyfin-vue:unstable.2024-11-20.2dc321e"
-    container_name: "jellyfin-vue"
-    ports:
-      - "18080:80"
-    networks:
-      - "jellyfin"
-
-
 networks:
   jellyfin:
     attachable: true
