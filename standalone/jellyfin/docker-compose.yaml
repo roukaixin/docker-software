@@ -1,6 +1,6 @@
 services:
   jellyfin:
-    image: jellyfin/jellyfin:10.10.3
+    image: jellyfin/jellyfin:10.10.6
     container_name: "jellyfin"
     volumes:
       - ./config:/config
@@ -11,13 +11,9 @@ services:
       - "jellyfin"
     ports:
       - "8096:8096"
-    environment:
-      - "NO_PROXY=localhost,127.0.0.1"
-      - "HTTPS_PROXY=http://host.docker.internal:${PROXY_PORT}"
-      - "HTTP_PROXY=http://host.docker.internal:${PROXY_PORT}"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     user: "${UID}:${GID}"
+    depends_on:
+      - metatube
     runtime: nvidia
     deploy:
       resources:
@@ -26,6 +22,22 @@ services:
               - driver: nvidia
                 count: all
                 capabilities: [ gpu ]
+
+  metatube:
+    image: metatube/metatube-server:1.2.9
+    container_name: metatube
+    restart: 'unless-stopped'
+    networks:
+      - "jellyfin"
+    ports:
+      - "8097:8080"
+    volumes:
+      - ./metatube/config:/config
+    environment:
+      MT_MOVIE_PROVIDER_PRIORITY_JAVBUS: 1100
+    command:
+      - "-dsn"
+      - "/config/metatube.db"
 
 networks:
   jellyfin:
