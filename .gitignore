@@ -14,3 +14,7 @@ standalone/aria2/download
 standalone/jellyfin/cache
 standalone/jellyfin/config
 standalone/jellyfin/media
+
+local/download
+
+standalone/jellyfin/metatube/config

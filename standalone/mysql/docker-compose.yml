@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:8.0.33
+    image: mysql:9.2.0
     container_name: mysql
     networks:
       - "mysql"
@@ -11,15 +11,16 @@ services:
     env_file:
       - ".env"
     environment:
-      - "MYSQL_ROOT_PASSWORD=12345678"
+      MYSQL_ROOT_PASSWORD: "12345678"
+      TZ: "Asia/Shanghai"
     # 不知道什么原因，使用 5.7.41 的镜像加入资源限制启动不起来
     deploy:
       resources:
         limits:
           memory: 512M
     command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_general_ci
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_general_ci"
     restart: unless-stopped
 
 networks:
