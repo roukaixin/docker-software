@@ -13,10 +13,10 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - 8006:8006
-      - 3389:3389/tcp
-      - 3389:3389/udp
+      - "8006:8006"
+      - "3389:3389/tcp"
+      - "3389:3389/udp"
     stop_grace_period: 2m
     volumes:
-      - /home/tnt/Desktop:/shared
+      - /home/tnt/Desktop/share-file:/shared
     restart: unless-stopped
