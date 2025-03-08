@@ -1,0 +1,16 @@
+services:
+  alpine:
+    image: alpine:3.20.3
+    container_name: alpine
+    hostname: alpine
+    tty: true
+    expose:
+      - 5900
+    networks:
+      - linux
+
+networks:
+  linux:
+    attachable: true
+    name: "linux"
+    external: false
