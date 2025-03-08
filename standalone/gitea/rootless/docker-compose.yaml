@@ -1,6 +1,6 @@
 services:
   gitea:
-    image: gitea/gitea:1.22.3-rootless
+    image: gitea/gitea:1.23.5-rootless
     container_name: gitea
     environment:
       - USER=${USER}
@@ -79,11 +79,6 @@ services:
       - ./token:/token
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://127.0.0.1:3000" ]
-      interval: 10s
-      timeout: 1s
-      retries: 1
     ports:
       - "${HTTP_PORT}:3000"
       - "${SSH_PORT}:2222"
