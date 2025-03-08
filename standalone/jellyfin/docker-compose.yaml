@@ -3,12 +3,10 @@ services:
     image: jellyfin/jellyfin:10.10.6
     container_name: "jellyfin"
     volumes:
-      - ./config:/config
+      - ./config/jellyfin:/config
       - ./cache:/cache
       - /home/tnt/Videos:/media
     restart: 'unless-stopped'
-    networks:
-      - "jellyfin"
     ports:
       - "8096:8096"
     user: "${UID}:${GID}"
@@ -27,20 +25,10 @@ services:
     image: metatube/metatube-server:1.2.9
     container_name: metatube
     restart: 'unless-stopped'
-    networks:
-      - "jellyfin"
-    ports:
-      - "8097:8080"
     volumes:
-      - ./metatube/config:/config
+      - ./config/metatube:/config
     environment:
       MT_MOVIE_PROVIDER_PRIORITY_JAVBUS: 1100
     command:
       - "-dsn"
       - "/config/metatube.db"
-
-networks:
-  jellyfin:
-    attachable: true
-    external: false
-    name: "jellyfin"
