@@ -51,3 +51,18 @@ sudo pacman -S nvidia-container-toolkit
 在播放设置中选择自己显卡能支持的解码选项
 
 不知道可以在 `https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new` 中搜索
+
+
+### metatube
+
+官方文档: `https://metatube-community.github.io/README_ZH/`
+
+部署 `metatube` 刮削后端
+
+> `api` 接口
+
+- 搜索
+  - http://127.0.0.1:8097/v1/movies/search?q=062919_866
+
+- 开启刮削地址列表
+  - http://127.0.0.1:8097/v1/providers
