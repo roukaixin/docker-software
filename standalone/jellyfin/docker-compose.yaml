@@ -22,7 +22,7 @@ services:
                 capabilities: [ gpu ]
 
   metatube:
-    image: metatube/metatube-server:1.2.9
+    image: ghcr.io/metatube-community/:1.2.11
     container_name: metatube
     restart: 'unless-stopped'
     volumes:
