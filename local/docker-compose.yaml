@@ -1,0 +1,48 @@
+services:
+  aria2:
+    # 端口 6800、6881
+    # https://github.com/qbittorrent/qBittorrent/search?l=C%2B%2B&q=router
+    container_name: aria2
+    image: roukaixin/aria2:release-1.37.0
+    environment:
+      LISTEN_PORT: ${LISTEN_PORT}
+      DHT_LISTEN_PORT: ${DHT_LISTEN_PORT}
+      RPC_SECRET: ${RPC_SECRET}
+      SEED_TIME: 1440
+      BT_MIN_CRYPTO_LEVEL: arc4
+      BT_SAVE_METADATA: false
+    volumes:
+      - "./aria2:/aria2/.aria2"
+      - "./download:/aria2/download"
+    network_mode: host
+    restart: unless-stopped
+    dns: 8.8.8.8
+
+  ariang:
+    # 端口 6880
+    image: p3terx/ariang
+    container_name: ariang
+    logging:
+      options:
+        max-size: 1m
+    network_mode: host
+    restart: unless-stopped
+    depends_on:
+      - aria2
+
+  aList:
+    # 端口 5244/5245
+    image: xhofe/alist:v3.41.0-ffmpeg
+    container_name: alist
+    environment:
+      - "PUID=${PUID}"
+      - "PGID=${PGID}"
+      - "UMASK=${UMASK}"
+      - "TZ=Asia/Shanghai"
+    volumes:
+      - "./data:/opt/alist/data"
+    restart: unless-stopped
+    network_mode: host
+    dns: 8.8.8.8
+    depends_on:
+      - aria2

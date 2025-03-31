@@ -15,6 +15,9 @@ standalone/jellyfin/cache
 standalone/jellyfin/config
 standalone/jellyfin/media
 
+standalone/moviepilot/config
+standalone/moviepilot/core
+
 local/download
 
 standalone/jellyfin/metatube/config
