@@ -1,6 +1,6 @@
 services:
   gitea:
-    image: gitea/gitea:1.23.5
+    image: gitea/gitea:1.23.8
     container_name: gitea
     environment:
       - USER=${USER}
@@ -85,16 +85,7 @@ services:
       interval: 10s
       timeout: 1s
       retries: 1
-    command: /bin/sh -c \
-      "nohup /bin/s6-svscan /etc/s6 > ~/gitea.log 2>&1 & \
-      while true; do if grep -q \"Starting new Web server\" ~/gitea.log; then echo $(su  tnt -c '/usr/local/bin/gitea actions generate-runner-token' | tail -n 1) > ~/runner_registration_token; break; else sleep 1; fi done && \
-      cat ~/runner_registration_token && \
-      touch /token/.runner_token && \
-      echo GITEA_RUNNER_REGISTRATION_TOKEN= > /token/.runner_token && \
-      sed -i \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat ~/runner_registration_token)/\" /token/.runner_token && \
-      rm ~/runner_registration_token && \
-      tail -f ~/gitea.log"
-
+    command: /bin/sh -c \ "nohup /bin/s6-svscan /etc/s6 > ~/gitea.log 2>&1 & \ while true; do if grep -q \"Starting new Web server\" ~/gitea.log; then echo $(su  tnt -c '/usr/local/bin/gitea actions generate-runner-token' | tail -n 1) > ~/runner_registration_token; break; else sleep 1; fi done && \ cat ~/runner_registration_token && \ touch /token/.runner_token && \ echo GITEA_RUNNER_REGISTRATION_TOKEN= > /token/.runner_token && \ sed -i \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat ~/runner_registration_token)/\" /token/.runner_token && \ rm ~/runner_registration_token && \ tail -f ~/gitea.log"
   runner:
     image: gitea/act_runner:0.2.11
     container_name: runner
@@ -117,7 +108,6 @@ services:
       gitea:
         condition: service_healthy
     entrypoint: /bin/sh -c "cat /token/.runner_token && export $(cat /token/.runner_token) && /sbin/tini -- /opt/act/run.sh"
-
 networks:
   gitea:
     name: gitea
@@ -128,3 +118,4 @@ networks:
     external: true
   redis:
     external: true
+
