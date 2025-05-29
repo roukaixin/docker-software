@@ -1,6 +1,6 @@
 services:
   nacos:
-    image: nacos/nacos-server:v3.0.1
+    image: nacos/nacos-server:v2.2.2
     ports:
       - "8848:8848"
       - "9848:9848"
@@ -12,9 +12,9 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+
 networks:
   nacos:
     external: true
   mysql:
     external: true
-
