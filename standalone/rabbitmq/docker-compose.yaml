@@ -1,18 +1,16 @@
 services:
   rabbitmq:
-    image: rabbitmq:3.11.13-management
+    image: rabbitmq:4.1.1-management-alpine
     ports:
       - "5672:5672"
       - "15672:15672"
     hostname: rabbitmq
     environment:
-      - "RABBITMQ_DEFAULT_USER=rabbitmq"
-    env_file:
-      - .env
+      - "RABBITMQ_CONF_ENV_FILE=/etc/rabbitmy/rabbitmq-env.conf"
     networks:
       - rabbitmq
     volumes:
-#      - ./config:/etc/rabbitmq
+      - "./config:/etc/rabbitmq"
       - "./data:/var/lib/rabbitmq"
     deploy:
       resources:
@@ -23,4 +21,6 @@ services:
 
 networks:
   rabbitmq:
-    external: true
+    name: "rabbitmq"
+    external: false
+    attachable: true
