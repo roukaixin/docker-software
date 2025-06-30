@@ -29,20 +29,3 @@ services:
     restart: unless-stopped
     depends_on:
       - aria2
-
-  aList:
-    # 端口 5244/5245
-    image: xhofe/alist:v3.41.0-ffmpeg
-    container_name: alist
-    environment:
-      - "PUID=${PUID}"
-      - "PGID=${PGID}"
-      - "UMASK=${UMASK}"
-      - "TZ=Asia/Shanghai"
-    volumes:
-      - "./data:/opt/alist/data"
-    restart: unless-stopped
-    network_mode: host
-    dns: 8.8.8.8
-    depends_on:
-      - aria2
