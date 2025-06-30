@@ -1,7 +1,7 @@
 services:
-    aList:
-        image: xhofe/alist:v3.40.0-ffmpeg
-        container_name: alist
+    openlist:
+        image: "openlistteam/openlist:v4.0.5-ffmpeg"
+        container_name: "openlist"
         environment:
             - "PUID=${PUID}"
             - "PGID=${PGID}"
@@ -13,14 +13,15 @@ services:
             - "5244:5244"
         restart: unless-stopped
         networks:
-            - alist
+            - openlist
             - aria2
         dns: 8.8.8.8
 
 networks:
-    alist:
+    openlist:
         external: false
-        name: alist
+        name: openlist
+        attachable: true
     aria2:
         name: aria2
         external: true
