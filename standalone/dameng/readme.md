@@ -6,6 +6,8 @@
 
 https://eco.dameng.com/download/
 
+**注意：容易现在达梦官方不提供 docker 镜像下载地址。所以自己要上网找一下别人下载下来的文件**
+
 # 导入镜像
 
 docker image load -i dm8_20240715_x86_rh6_rq_single.tar 
