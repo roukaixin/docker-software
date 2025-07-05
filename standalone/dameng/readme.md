@@ -27,4 +27,4 @@ docker image load -i dm8_20240715_x86_rh6_rq_single.tar
 
 
 
-**注意** : SYSDBA_PWD 需要 9 - 48 位密码
+**注意：SYSDBA_PWD 需要 9 - 48 位密码**
