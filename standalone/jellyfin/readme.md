@@ -59,6 +59,8 @@ sudo pacman -S nvidia-container-toolkit
 
 部署 `metatube` 刮削后端
 
+`https://madou.club/`
+
 > `api` 接口
 
 - 搜索
