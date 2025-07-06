@@ -1,6 +1,6 @@
 services:
   qinglong:
-    image: whyour/qinglong:2.18.2
+    image: "whyour/qinglong:2.19.2"
     container_name: "qinglong"
     volumes:
       - ./data:/ql/data
