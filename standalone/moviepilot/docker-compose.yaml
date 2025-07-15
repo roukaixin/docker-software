@@ -1,6 +1,6 @@
 services:
   moviepilot:
-    image: jxxghp/moviepilot-v2:2.3.4
+    image: jxxghp/moviepilot-v2:2.6.5
     stdin_open: true
     tty: true
     container_name: moviepilot-v2
