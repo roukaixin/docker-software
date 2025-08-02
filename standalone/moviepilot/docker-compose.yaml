@@ -1,6 +1,6 @@
 services:
   moviepilot:
-    image: jxxghp/moviepilot-v2:2.6.7
+    image: "ghcr.io/jxxghp/moviepilot:2.6.9"
     stdin_open: true
     tty: true
     container_name: moviepilot-v2
@@ -22,3 +22,10 @@ services:
       - 'TZ=Asia/Shanghai'
       - 'SUPERUSER=admin'
     restart: unless-stopped
+    networks:
+      - "moviepilot"
+
+networks:
+  moviepilot:
+    name: "moviepilot"
+    external: false
