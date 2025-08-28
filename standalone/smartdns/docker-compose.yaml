@@ -1,0 +1,10 @@
+services:
+  smartdns:
+    image: "pymumu/smartdns:Release46"
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+      - "6080:6080"
+    volumes:
+      - ./config:/etc/smartdns
+    restart: unless-stopped
