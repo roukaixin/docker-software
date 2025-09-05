@@ -93,7 +93,7 @@ services:
       tail -f ~/gitea.log"
 
   runner:
-    image: gitea/act_runner:0.2.11
+    image: gitea/act_runner:0.2.13
     container_name: runner
     environment:
       - CONFIG_FILE=/config.yaml
