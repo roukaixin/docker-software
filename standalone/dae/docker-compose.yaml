@@ -1,0 +1,11 @@
+services:
+  dae:
+    image: "daeuniverse/dae:20250824"
+    volumes:
+      - "/sys:/sys:ro"
+      - "/etc/dae:/etc/dae:ro"
+    container_name: "dae"
+    networks:
+      - "dae"
+    restart: unless-stopped
+    privileged: true
