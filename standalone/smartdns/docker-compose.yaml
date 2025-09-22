@@ -1,11 +1,12 @@
 services:
   smartdns:
-    image: "pymumu/smartdns"
+    image: "pymumu/smartdns:Release47"
     container_name: "smartdns"
     ports:
       - "6053:53/udp"
       - "6053:53/tcp"
       - "6080:6080"
     volumes:
-      - ./config:/etc/smartdns
+      - "./config:/etc/smartdns"
+      - "./data:/var/lib/smartdns"
     restart: unless-stopped
