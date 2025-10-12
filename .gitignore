@@ -21,3 +21,5 @@ standalone/moviepilot/core
 local/download
 
 standalone/jellyfin/metatube/config
+
+standalone/dae/config
