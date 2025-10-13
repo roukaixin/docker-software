@@ -7,5 +7,6 @@ services:
     container_name: "dae"
     restart: unless-stopped
     privileged: true
-    network_mode: host
-    pid: host
+    dns:
+      - 119.29.29.29
+      - 119.28.28.28
