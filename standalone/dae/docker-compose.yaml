@@ -9,3 +9,7 @@ services:
       - "dae"
     restart: unless-stopped
     privileged: true
+
+networks:
+  dae:
+    name: "dae"
