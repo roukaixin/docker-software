@@ -2,8 +2,8 @@ services:
   dae:
     image: "daeuniverse/dae:20250824"
     volumes:
-      - "/sys:/sys:ro"
-      - "./config:/etc/dae:ro"
+      - "/sys:/sys"
+      - "./config:/etc/dae"
     container_name: "dae"
     networks:
       - "dae"
