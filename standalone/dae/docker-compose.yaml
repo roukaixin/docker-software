@@ -5,11 +5,7 @@ services:
       - "/sys:/sys"
       - "./config:/etc/dae"
     container_name: "dae"
-    networks:
-      - "dae"
     restart: unless-stopped
     privileged: true
-
-networks:
-  dae:
-    name: "dae"
+    network_mode: host
+    pid: host
