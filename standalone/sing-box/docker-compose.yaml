@@ -1,0 +1,17 @@
+services:
+  sing-box:
+    image: "ghcr.io/sagernet/sing-box:v1.12.10"
+    container_name: "sing-box"
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    sysctls:
+      net.ipv4.conf.lo.accept_local: 1
+    cap_add:
+      - NET_ADMIN
+      - BPF
+      - PERFMON
+    privileged: true
+    volumes:
+      - "/root/.landscape-router/unix_link/:/ld_unix_link/:ro"
+      - "./app:/app"
