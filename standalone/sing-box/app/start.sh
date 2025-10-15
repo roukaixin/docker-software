@@ -7,7 +7,7 @@
 #ip -6 rule add fwmark 0x1 lookup 106
 #ip -6 route add local ::/0 dev lo table 106
 
-/home/tnt/job/docker-software/standalone/sing-box/app/server/run.sh /app/server &
+/app/server/run.sh /app/server &
 /app/redirect_pkg_handler &
 
 # 等待子进程结束
