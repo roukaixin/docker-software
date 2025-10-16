@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 添加路由规则
-ip rule add fwmark 0x1/0x1 lookup 100
-ip route add local default dev lo table 100
+ip rule add fwmark 1 table 100
+ip route add local 0.0.0.0/0 dev lo table 100
 
 
 /app/server/run.sh /app/server &
