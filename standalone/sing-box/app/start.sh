@@ -1,6 +1,7 @@
 #!/bin/bash
 
-apk add --no-cache iptables ca-certificates
+sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+apk add --no-cache iptables ca-certificates libgcc libelf
 
 ip rule add fwmark 1 table 100
 ip route add local 0.0.0.0/0 dev lo table 100
