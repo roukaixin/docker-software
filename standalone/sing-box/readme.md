@@ -2,6 +2,7 @@
 
 > [!question]
 > 在`compose`文件中一定要挂载`Landscap`配置目录中`uninx_link`目录
+> 使用旧版本`sniff`
 
 ## 添加节点
 

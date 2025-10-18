@@ -41,9 +41,6 @@
   "route": {
     "rules": [
       {
-        "action": "sniff"
-      },
-      {
         "protocol": "dns",
         "action": "hijack-dns"
       },
@@ -129,7 +126,9 @@
       "type": "tproxy",
       "tag": "tproxy-in",
       "listen": "::",
-      "listen_port": 12345
+      "listen_port": 12345,
+      "sniff": true,
+      "sniff_override_destination": true
     }
   ],
   "outbounds": [
