@@ -1,0 +1,16 @@
+services:
+  mihomo:
+    image: "metacubex/mihomo:v1.19.15"
+    container_name: "sing-box"
+    restart: unless-stopped
+    sysctls:
+      - net.ipv4.conf.lo.accept_local=1
+    cap_add:
+      - NET_ADMIN
+      - BPF
+      - PERFMON
+    privileged: true
+    volumes:
+      - "/root/.landscape-router/data/unix_link/:/ld_unix_link/:ro"
+      - "./app:/app"
+    entrypoint: [ "/app/start.sh" ]
