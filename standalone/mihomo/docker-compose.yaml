@@ -1,7 +1,7 @@
 services:
   mihomo:
     image: "metacubex/mihomo:v1.19.15"
-    container_name: "sing-box"
+    container_name: "mihomo"
     restart: unless-stopped
     sysctls:
       - net.ipv4.conf.lo.accept_local=1
@@ -10,6 +10,8 @@ services:
       - BPF
       - PERFMON
     privileged: true
+    ports:
+      - "9093:9093"
     volumes:
       - "/root/.landscape-router/data/unix_link/:/ld_unix_link/:ro"
       - "./app:/app"
