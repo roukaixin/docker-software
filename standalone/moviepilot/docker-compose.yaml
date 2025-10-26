@@ -1,10 +1,10 @@
 services:
   moviepilot:
-    image: "ghcr.io/jxxghp/moviepilot:2.6.9"
+    image: "ghcr.io/jxxghp/moviepilot:2.8.1-1"
     stdin_open: true
     tty: true
-    container_name: moviepilot-v2
-    hostname: moviepilot-v2
+    container_name: moviepilot
+    hostname: moviepilot
     ports:
       - '3000:3000'
       - '3001:3001'
