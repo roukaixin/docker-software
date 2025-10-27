@@ -1,0 +1,16 @@
+services:
+  gecoosac:
+    image: "tearsful/gecoosac:V2"
+    container_name: "gecoosac"
+    restart: unless-stopped
+    ports:
+      - "60650:60650/tcp"
+      - "60650:60650/udp"
+      - "60680:8080"
+    volumes:
+      - "./data:/data"
+    environment:
+      UID: 0
+      GID: 0
+      GIDLIST: 0
+    privileged: true
