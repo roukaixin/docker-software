@@ -23,3 +23,6 @@ local/download
 standalone/jellyfin/metatube/config
 
 standalone/dae/config
+
+standalone/sing-box/app/server/sing-box
+!standalone/sing-box/app/server/sing-box/config.json.template
