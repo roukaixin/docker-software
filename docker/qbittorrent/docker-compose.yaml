@@ -1,6 +1,8 @@
+name: application
+
 services:
   qbittorrent:
-    image: "linuxserver/qbittorrent:5.0.0"
+    image: "linuxserver/qbittorrent:5.1.2"
     container_name: "qbittorrent"
     environment:
       - "PUID=1000"
@@ -16,10 +18,3 @@ services:
       - "${WEBUI_PORT}:${WEBUI_PORT}"
       - "${TORRENTING_PORT}:${TORRENTING_PORT}"
       - "${TORRENTING_PORT}:${TORRENTING_PORT}/udp"
-    networks:
-      - "qbittorrent"
-
-networks:
-  qbittorrent:
-    external: false
-    name: "qbittorrent"
