@@ -16,6 +16,14 @@ spec:
       volumeMounts:
         - mountPath: /app/models
           name: models
+      readinessProbe:
+        httpGet:
+          port: 8989
+          path: /health
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        successThreshold: 1
+        failureThreshold: 3
   volumes:
     - name: models
       hostPath:
