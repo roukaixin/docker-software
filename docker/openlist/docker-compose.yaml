@@ -1,27 +1,17 @@
+name: application
+
 services:
     openlist:
-        image: "openlistteam/openlist:v4.0.5-ffmpeg"
+        image: "ghcr.io/openlistteam/openlist-git:v4.1.6-ffmpeg"
         container_name: "openlist"
         environment:
-            - "PUID=${PUID}"
-            - "PGID=${PGID}"
-            - "UMASK=${UMASK}"
-            - "TZ=Asia/Shanghai"
+            UMASK: "${UMASK}"
+            TZ: "Asia/Shanghai"
+            OPENLIST_ADMIN_PASSWORD: ${OPENLIST_ADMIN_PASSWORD}
+            RUN_ARIA2: false
         volumes:
-            - "./data:/opt/alist/data"
+            - "./data:/opt/openlist/data"
         ports:
             - "5244:5244"
         restart: unless-stopped
-        networks:
-            - openlist
-            - aria2
-        dns: 8.8.8.8
-
-networks:
-    openlist:
-        external: false
-        name: openlist
-        attachable: true
-    aria2:
-        name: aria2
-        external: true
+        user: ${UID}:${GID}
