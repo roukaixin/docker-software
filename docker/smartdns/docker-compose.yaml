@@ -1,3 +1,5 @@
+name: dns
+
 services:
   smartdns:
     image: "pymumu/smartdns:Release47"
