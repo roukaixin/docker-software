@@ -3,27 +3,27 @@
 data
 logs
 
-standalone/gitea/rootless/config/gitea/app.ini
+docker/gitea/rootless/config/gitea/app.ini
 .runner_token
 
-standalone/qbittorrent/config
+docker/qbittorrent/config
 
-standalone/aria2/download
+docker/aria2/download
 
 # jellyfin
-standalone/jellyfin/cache
-standalone/jellyfin/config
-standalone/jellyfin/media
+docker/jellyfin/cache
+docker/jellyfin/config
+docker/jellyfin/media
 
-standalone/moviepilot/config
-standalone/moviepilot/core
+docker/moviepilot/config
+docker/moviepilot/core
 
 local/download
 
-standalone/jellyfin/metatube/config
+docker/jellyfin/metatube/config
 
-standalone/dae/config
+docker/dae/config
 
-standalone/sing-box/app/server/sing-box/*
-!standalone/sing-box/app/server/sing-box/
-!standalone/sing-box/app/server/sing-box/config.json.template
+docker/sing-box/app/server/sing-box/*
+!docker/sing-box/app/server/sing-box/
+!docker/sing-box/app/server/sing-box/config.json.template
