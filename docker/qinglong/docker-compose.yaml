@@ -9,14 +9,7 @@ services:
     ports:
       - "5700:5700"
     restart: unless-stopped
-    networks:
-      - "qinglong"
     deploy:
       resources:
         limits:
           memory: 512M
-
-networks:
-  qinglong:
-    name: "qinglong"
-    external: false
