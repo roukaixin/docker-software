@@ -16,6 +16,6 @@ services:
       - PERFMON
     privileged: true
     volumes:
-      - "/root/.landscape-router/data/unix_link/:/ld_unix_link/:ro"
+      - "${LANDSCAPE_CONFIG_DIR}/unix_link/:/ld_unix_link/:ro"
       - "./app:/app"
     entrypoint: [ "/app/start.sh" ]
