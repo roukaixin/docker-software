@@ -2,7 +2,7 @@ name: dns
 
 services:
   smartdns:
-    image: "pymumu/smartdns:Release47"
+    image: "pymumu/smartdns:Release47.1"
     container_name: "smartdns"
     ports:
       - "6053:53/udp"
