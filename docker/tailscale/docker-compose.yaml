@@ -1,6 +1,6 @@
 services:
   tailscale:
-    image: tailscale/tailscale:v1.20.1
+    image: "ghcr.io/tailscale/tailscale:v1.90.6"
     container_name: tailscale
     restart: unless-stopped
     cap_add:
@@ -8,26 +8,27 @@ services:
       - SYS_ADMIN
       - PERFMON
     devices:
-      - /dev/net/tun
+      - "/dev/net/tun:/dev/net/tun"
+    privileged: true
     environment:
-      - TS_AUTHKEY=${TS_AUTHKEY}
-      - TS_STATE_DIR=/var/lib/tailscale
-      - TS_EXTRA_ARGS=--accept-dns=false --advertise-routes=${ADVERTISE_ROUTES}
-      - TS_USERSPACE=false
-      - TS_LOCAL_ADDR_PORT=${TS_LOCAL_ADDR_PORT}
+      TS_AUTHKEY: "${TS_AUTHKEY}"
+      TS_STATE_DIR: "/var/lib/tailscale"
+      TS_USERSPACE: false
+      TS_EXTRA_ARGS: "--accept-dns=false --advertise-routes=${ADVERTISE_ROUTES}"
+      TS_LOCAL_ADDR_PORT: "${TS_LOCAL_ADDR_PORT}"
     sysctls:
       net.ipv4.ip_forward: "1"
       net.ipv6.conf.all.forwarding: "1"
     volumes:
       - ./data:/var/lib/tailscale
     networks:
-      my-tailscale-bridge:
+      default:
         ipv4_address: 172.188.0.10
     dns:
       - 172.188.0.1
 
 networks:
-  my-tailscale-bridge:
+  default:
     driver: bridge
     driver_opts:
       com.docker.network.bridge.name: tail-br0
