@@ -15,7 +15,7 @@ services:
       TS_STATE_DIR: "/var/lib/tailscale"
       TS_USERSPACE: false
       TS_EXTRA_ARGS: "--accept-dns=false --advertise-routes=${ADVERTISE_ROUTES}"
-      TS_LOCAL_ADDR_PORT: "${TS_LOCAL_ADDR_PORT}"
+      TS_TAILSCALED_EXTRA_ARGS: "--port=${TS_TAILSCALED_EXTRA_ARGS_POST}"
     sysctls:
       net.ipv4.ip_forward: "1"
       net.ipv6.conf.all.forwarding: "1"
