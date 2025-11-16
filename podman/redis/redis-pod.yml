@@ -25,6 +25,11 @@ spec:
         periodSeconds: 5
         successThreshold: 1
         failureThreshold: 3
+      resources:
+        requests:
+          memory: 64Mi
+        limits:
+          memory: 128Mi
   volumes:
     - name: data
       hostPath:
