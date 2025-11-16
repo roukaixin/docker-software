@@ -1,0 +1,12 @@
+name: app
+
+services:
+  ezbookkeeping:
+    container_name: ezbookkeeping
+    image: mayswind/ezbookkeeping:1.2
+    ports:
+      - "18080:8080"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "./data:/ezbookkeeping/data"
+      - "./storage:/ezbookkeeping/storage"
