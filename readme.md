@@ -1,6 +1,15 @@
 # docker-software
 
-docker构建的软件列表
+使用 `podman` 或者 `docker` 快速工具软件，用于快速开发。
+
+- `podman` 目录是使用 `podman` 运行容器，并使用 `pod` 方式
+- `docker` 目录是使用 `docker` 运行容器，使用 `compose` 方式
+
+# `podman`
+
+[mtranserver](./podman/mtranserver/readme.md)
+
+# `docker`
 
 # cluster(集群)
 
