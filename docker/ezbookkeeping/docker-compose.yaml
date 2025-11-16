@@ -5,8 +5,14 @@ services:
     container_name: ezbookkeeping
     image: mayswind/ezbookkeeping:1.2
     ports:
-      - "18080:8080"
+      - "${EBK_SERVER_HTTP_PORT}:${EBK_SERVER_HTTP_PORT}"
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "./data:/ezbookkeeping/data"
       - "./storage:/ezbookkeeping/storage"
+    environment:
+      EBK_SERVER_HTTP_PORT: ${EBK_SERVER_HTTP_PORT}
+      EBK_SERVER_ENABLE_GZIP: true
+      EBK_USER_ENABLE_REGISTER: false
+      EBK_SECURITY_ENABLE_API_TOKEN: true
+      EBK_AUTH_ENABLE_FORGET_PASSWORD: false
