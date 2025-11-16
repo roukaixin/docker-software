@@ -9,3 +9,9 @@
 mkdir -p data storage
 chown 1000:1000 data storage
 ```
+
+添加用户
+
+```shell
+./ezbookkeeping userdata user-add --username roukaixin --password 12345678 --email "a3427173515@163.com" --nickname roukaixin --default-currency CNY
+```
