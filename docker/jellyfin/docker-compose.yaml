@@ -2,7 +2,7 @@ name: application
 
 services:
   jellyfin:
-    image: "ghcr.io/jellyfin/jellyfin:10.11.2"
+    image: "ghcr.io/jellyfin/jellyfin:10.11.3"
     container_name: "jellyfin"
     volumes:
       - ./config/jellyfin:/config
@@ -14,14 +14,6 @@ services:
     user: "${UID}:${GID}"
     depends_on:
       - metatube
-    runtime: nvidia
-    deploy:
-      resources:
-        reservations:
-          devices:
-              - driver: nvidia
-                count: all
-                capabilities: [ gpu ]
 
   metatube:
     image: "ghcr.io/metatube-community/metatube-server:1.3.2"
