@@ -4,10 +4,12 @@ services:
   jellyfin:
     image: "ghcr.io/jellyfin/jellyfin:10.11.3"
     container_name: "jellyfin"
+    hostname: "jellyfin"
     volumes:
       - ./config/jellyfin:/config
       - ./cache:/cache
-      - ./data:/media
+      - ./data:/media/jellyfin
+      - ../qbittorrent/data:/media/qbittorrent
     restart: 'unless-stopped'
     ports:
       - "8096:8096"
@@ -17,7 +19,8 @@ services:
 
   metatube:
     image: "ghcr.io/metatube-community/metatube-server:1.3.2"
-    container_name: metatube
+    container_name: "metatube"
+    hostname: "metatube"
     restart: 'unless-stopped'
     volumes:
       - ./config/metatube:/config
