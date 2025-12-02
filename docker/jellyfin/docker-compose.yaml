@@ -18,14 +18,14 @@ services:
       - metatube
 
   metatube:
-    image: "ghcr.io/metatube-community/metatube-server:1.3.2"
+    image: "ghcr.io/metatube-community/metatube-server:dev"
     container_name: "metatube"
     hostname: "metatube"
     restart: 'unless-stopped'
     volumes:
       - ./config/metatube:/config
     environment:
-      MT_MOVIE_PROVIDER_PRIORITY_JAVBUS: 1100
+      MT_MOVIE_PROVIDER_JAVBUS__PRIORITY: 1100
     command:
       - "-dsn"
       - "/config/metatube.db"
