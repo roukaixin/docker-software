@@ -17,6 +17,11 @@ services:
     user: "${UID}:${GID}"
     depends_on:
       - metatube
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      HTTP_PROXY: http://host.docker.internal:host-gateway:7890
+      HTTPS_PROXY: http://host.docker.internal:host-gateway:7890
 
   metatube:
     image: "ghcr.io/metatube-community/metatube-server:dev"
@@ -26,7 +31,11 @@ services:
     volumes:
       - ./config/metatube:/config
     environment:
+      HTTP_PROXY: http://host.docker.internal:host-gateway:7890
+      HTTPS_PROXY: http://host.docker.internal:host-gateway:7890
       MT_MOVIE_PROVIDER_JAVBUS__PRIORITY: 1100
     command:
       - "-dsn"
       - "/config/metatube.db"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
