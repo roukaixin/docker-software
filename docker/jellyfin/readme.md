@@ -64,7 +64,7 @@ sudo pacman -S nvidia-container-toolkit
 > `api` 接口
 
 - 搜索
-  - http://127.0.0.1:8097/v1/movies/search?q=062919_866
+  - http://127.0.0.1:8080/v1/movies/search?q=062919_866
 
 - 开启刮削地址列表
-  - http://127.0.0.1:8097/v1/providers
+  - http://127.0.0.1:8080/v1/providers
