@@ -16,3 +16,4 @@ services:
       EBK_USER_ENABLE_REGISTER: false
       EBK_SECURITY_ENABLE_API_TOKEN: true
       EBK_AUTH_ENABLE_FORGET_PASSWORD: false
+    restart: unless-stopped
