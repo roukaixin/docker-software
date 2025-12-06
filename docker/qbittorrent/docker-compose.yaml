@@ -18,3 +18,8 @@ services:
       - "${WEBUI_PORT}:${WEBUI_PORT}"
       - "${TORRENTING_PORT}:${TORRENTING_PORT}"
       - "${TORRENTING_PORT}:${TORRENTING_PORT}/udp"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
