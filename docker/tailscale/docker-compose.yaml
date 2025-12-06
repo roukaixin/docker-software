@@ -26,6 +26,11 @@ services:
         ipv4_address: 172.188.0.10
     dns:
       - 172.188.0.1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
 
 networks:
   default:

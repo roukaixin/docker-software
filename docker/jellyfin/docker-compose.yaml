@@ -23,6 +23,11 @@ services:
       HTTP_PROXY: http://host.docker.internal:7890
       HTTPS_PROXY: http://host.docker.internal:7890
       NO_PROXY: localhost,127.0.0.1,metatube,metatube:8080
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
 
   metatube:
     image: "ghcr.io/metatube-community/metatube-server:dev"
@@ -40,3 +45,8 @@ services:
       - "/config/metatube.db"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"

@@ -17,3 +17,8 @@ services:
       EBK_SECURITY_ENABLE_API_TOKEN: true
       EBK_AUTH_ENABLE_FORGET_PASSWORD: false
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
