@@ -1,3 +1,5 @@
+name: application
+
 services:
   gitea:
     image: gitea/gitea:1.24.1
@@ -69,11 +71,6 @@ services:
     ports:
       - "${HTTP_PORT}:3000"
       - "${SSH_PORT}:22"
-    networks:
-      - gitea
-      - mysql
-      - minio
-      - redis
     volumes:
       - ./data/gitea:/data
       - ./token:/token:rw
@@ -94,6 +91,11 @@ services:
       sed -i \"s/GITEA_RUNNER_REGISTRATION_TOKEN=.*/GITEA_RUNNER_REGISTRATION_TOKEN=$(cat ~/runner_registration_token)/\" /token/.runner_token && \
       rm ~/runner_registration_token && \
       tail -f ~/gitea.log"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
 
   runner:
     image: gitea/act_runner:0.2.13
@@ -106,8 +108,6 @@ services:
       - ./data/runner:/data:rw
       - /var/run/docker.sock:/var/run/docker.sock
       - ./token:/token:ro
-    networks:
-      - gitea
     restart: unless-stopped
     deploy:
       resources:
@@ -117,14 +117,8 @@ services:
       gitea:
         condition: service_healthy
     entrypoint: /bin/sh -c "cat /token/.runner_token && export $(cat /token/.runner_token) && /sbin/tini -- /opt/act/run.sh"
-
-networks:
-  gitea:
-    name: gitea
-    external: false
-  mysql:
-    external: true
-  minio:
-    external: true
-  redis:
-    external: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"

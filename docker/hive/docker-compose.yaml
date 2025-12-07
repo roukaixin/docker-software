@@ -1,3 +1,5 @@
+name: application
+
 services:
   hive:
     image: apache/hive:4.0.0
@@ -15,11 +17,14 @@ services:
       resources:
         limits:
           memory: 512M
-    networks:
-      - hive
     volumes:
       - ./data:/opt/hive/data/warehouse
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
 
   metastore:
     image: apache/hive:4.0.0
@@ -37,19 +42,14 @@ services:
       resources:
         limits:
           memory: 512M
-    networks:
-      - hive
-      - mysql
     volumes:
       - type: bind
         source: ${POSTGRES_LOCAL_PATH}
         target: /opt/hive/lib/mysql.jar
       - ./data:/opt/hive/data/warehouse
     restart: unless-stopped
-
-networks:
-  hive:
-    external: false
-    name: hive
-  mysql:
-    external: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"

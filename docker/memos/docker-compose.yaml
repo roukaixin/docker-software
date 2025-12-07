@@ -1,3 +1,5 @@
+name: application
+
 services:
   memos:
     image: neosmemo/memos:0.22.3
@@ -7,12 +9,3 @@ services:
     ports:
       - "5230:${MEMOS_PORT}"
     restart: unless-stopped
-    networks:
-      - memos
-      - mysql
-networks:
-  memos:
-    external: false
-    name: memos
-  mysql:
-    external: true

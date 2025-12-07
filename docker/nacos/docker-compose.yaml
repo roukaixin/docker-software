@@ -1,3 +1,5 @@
+name: application
+
 services:
   nacos:
     image: nacos/nacos-server:v3.0.1
@@ -12,9 +14,8 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-
-networks:
-  nacos:
-    external: true
-  mysql:
-    external: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"

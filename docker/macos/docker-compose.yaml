@@ -1,3 +1,5 @@
+name: application
+
 services:
   macos:
     image: dockurr/macos:1.16
@@ -18,10 +20,8 @@ services:
     stop_grace_period: 2m
     volumes:
       - ./data:/storage
-    networks:
-      - "macos"
-
-networks:
-  macos:
-    name: macos
-    external: false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"

@@ -1,3 +1,5 @@
+name: application
+
 services:
   aria2:
     container_name: aria2
@@ -12,27 +14,24 @@ services:
       - "${DHT_LISTEN_PORT}:${DHT_LISTEN_PORT}/udp"
     volumes:
       - "./download:/aria2/download"
-    networks:
-      - aria2
     restart: unless-stopped
     dns: 8.8.8.8
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
 
   ariang:
     image: p3terx/ariang
     container_name: ariang
     ports:
       - "6880:6880"
-    logging:
-      options:
-        max-size: 1m
-    networks:
-      - aria2
     restart: unless-stopped
     depends_on:
       - aria2
-
-networks:
-  aria2:
-    attachable: true
-    name: aria2
-    external: false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
