@@ -1,14 +1,14 @@
+name: application
+
 services:
   kafka:
     image: apache/kafka-native:4.0.0
     container_name: kafka
     ports:
       - "9092:9092"
-    networks:
-      - kafka
     restart: unless-stopped
-
-networks:
-  kafka:
-    external: false
-    name: kafka
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"

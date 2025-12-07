@@ -1,9 +1,9 @@
+name: application
+
 services:
   mysql:
     image: mysql:9.2.0
     container_name: mysql
-    networks:
-      - "mysql"
     volumes:
       - ./data:/var/lib/mysql
     ports:
@@ -22,9 +22,8 @@ services:
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_general_ci"
     restart: unless-stopped
-
-networks:
-  mysql:
-    name: "mysql"
-    attachable: true
-    external: false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"

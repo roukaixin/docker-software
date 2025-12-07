@@ -1,3 +1,5 @@
+name: application
+
 services:
   arch:
     image: archlinux:multilib-devel
@@ -6,9 +8,8 @@ services:
     tty: true
     expose:
       - 5900
-    networks:
-      - linux
-
-networks:
-  linux:
-    external: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"

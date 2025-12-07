@@ -1,3 +1,5 @@
+name: application
+
 services:
   rabbitmq:
     image: rabbitmq:4.1.1-management-alpine
@@ -6,8 +8,6 @@ services:
       - "5672:5672"
       - "15672:15672"
     hostname: rabbitmq
-    networks:
-      - rabbitmq
     volumes:
       - "./config:/etc/rabbitmq"
       - "./data:/var/lib/rabbitmq"
@@ -16,10 +16,8 @@ services:
         limits:
           memory: 2048M  # 需要注意，如果限制内存过低，有可能容器启动不起来（ code 0 ）
     restart: unless-stopped
-
-
-networks:
-  rabbitmq:
-    name: "rabbitmq"
-    external: false
-    attachable: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"

@@ -1,3 +1,5 @@
+name: application
+
 services:
   dm:
     image: greyhawk/dm8_single:dm8_20241022_rev244896_x86_rh6_64
@@ -11,9 +13,8 @@ services:
       - dm
     env_file:
       - .env
-
-networks:
-  dm:
-    external: false
-    name: "dameng"
-    attachable: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
