@@ -13,3 +13,26 @@ services:
     environment:
       ND_ENABLEINSIGHTSCOLLECTOR: false
       ND_DEFAULTLANGUAGE: "zh-Hans"
+    depends_on:
+      - music-tag
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
+
+  music-tag:
+    image: xhongc/music_tag_web:2.6.6
+    container_name: music-tag-web
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./data/music:/app/media:rw
+      - ./data/music-tag-web/:/app/data
+    command: /start
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
