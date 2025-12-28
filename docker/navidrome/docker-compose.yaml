@@ -28,7 +28,7 @@ services:
     ports:
       - "8001:8001"
     volumes:
-      - ./data/music:/app/media:ro
+      - ./data/music:/app/media:rw
       - ./data/music-tag-web/:/app/data
     command: /start
     restart: unless-stopped
