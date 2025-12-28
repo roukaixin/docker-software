@@ -2,7 +2,7 @@ name: application
 
 services:
   qinglong:
-    image: "whyour/qinglong:2.19.2"
+    image: "ghcr.io/whyour/qinglong:2.20.1"
     container_name: "qinglong"
     volumes:
       - ./data:/ql/data
