@@ -2,7 +2,7 @@ name: application
 
 services:
   moviepilot:
-    image: "ghcr.io/jxxghp/moviepilot:2.8.1-1"
+    image: "ghcr.io/jxxghp/moviepilot:2.9.0"
     stdin_open: true
     tty: true
     container_name: moviepilot
@@ -15,13 +15,15 @@ services:
       - './config:/config'
       - './core:/moviepilot/.cache/ms-playwright'
     environment:
-      - 'NGINX_PORT=3000'
-      - 'PORT=3001'
-      - 'PUID=1000'
-      - 'PGID=1000'
-      - 'UMASK=000'
-      - 'TZ=Asia/Shanghai'
-      - 'SUPERUSER=admin'
+      NGINX_PORT: 3000
+      PORT: 3001
+      PUID: 1000
+      PGID: 1000
+      UMASK: 000
+      TZ: Asia/Shanghai
+      SUPERUSER: admin
+      MOVIEPILOT_AUTO_UPDATE: false
+      AUTO_UPDATE_RESOURCE: true
     restart: unless-stopped
     logging:
       driver: "json-file"
