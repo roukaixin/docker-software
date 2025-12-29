@@ -24,9 +24,14 @@ services:
       SUPERUSER: admin
       MOVIEPILOT_AUTO_UPDATE: false
       AUTO_UPDATE_RESOURCE: true
+      HTTP_PROXY: http://host.docker.internal:7890
+      HTTPS_PROXY: http://host.docker.internal:7890
+      NO_PROXY: localhost,127.0.0.1
     restart: unless-stopped
     logging:
       driver: "json-file"
       options:
         max-size: "2m"
         max-file: "1"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
