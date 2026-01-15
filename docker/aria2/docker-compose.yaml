@@ -1,4 +1,5 @@
-name: application
+include:
+  - ../commons/docker-compose-application-include.yaml
 
 services:
   aria2:
@@ -13,9 +14,8 @@ services:
       - "${LISTEN_PORT}:${LISTEN_PORT}"
       - "${DHT_LISTEN_PORT}:${DHT_LISTEN_PORT}/udp"
     volumes:
-      - "./download:/aria2/download"
+      - "aria2:/aria2/download"
     restart: unless-stopped
-    dns: 8.8.8.8
     logging:
       driver: "json-file"
       options:

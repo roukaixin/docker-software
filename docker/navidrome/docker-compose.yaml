@@ -1,4 +1,5 @@
-name: application
+include:
+  - ../commons/docker-compose-application-include.yaml
 
 services:
   navidrome:
@@ -9,8 +10,8 @@ services:
       - "4533:4533"
     restart: unless-stopped
     volumes:
-      - "./data/data:/data"
-      - "./data/music:/music:ro"
+      - "./data:/data"
+      - "music:/music:ro"
     environment:
       ND_ENABLEINSIGHTSCOLLECTOR: false
       ND_DEFAULTLANGUAGE: "zh-Hans"
@@ -28,8 +29,8 @@ services:
     ports:
       - "8001:8001"
     volumes:
-      - ./data/music:/app/media:rw
-      - ./data/music-tag-web/:/app/data
+      - music:/app/media:rw
+      - ./data:/app/data
     command: /start
     restart: unless-stopped
     logging:

@@ -1,0 +1,25 @@
+name: application
+
+networks:
+  default:
+    name: application
+
+volumes:
+  aria2:
+    name: aria2
+    driver_opts:
+      type: none
+      o: bind
+      device: ${ARIA2_DATA_DIR}
+  music:
+    name: music
+    driver_opts:
+      type: none
+      o: bind
+      device: ${MUSIC_DATA_DIR}
+  qbittorrent:
+    name: qbittorrent
+    driver_opts:
+      type: none
+      o: bind
+      device: ${QBITTORRENT_DATA_DIR}

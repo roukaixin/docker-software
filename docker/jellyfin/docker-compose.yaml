@@ -1,4 +1,5 @@
-name: application
+include:
+  - ../commons/docker-compose-application-include.yaml
 
 services:
   jellyfin:
@@ -10,7 +11,7 @@ services:
       - "./cache:/cache"
       - "/usr/share/fonts:/usr/share/fonts:ro"
       - "./data:/media/jellyfin"
-      - "../qbittorrent/data:/media/qbittorrent:z"
+      - "qbittorrent:/media/qbittorrent:z"
     restart: 'unless-stopped'
     ports:
       - "8096:8096"
