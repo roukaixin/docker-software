@@ -2,7 +2,11 @@ name: proxy
 
 services:
   sing-box:
-    image: "ghcr.io/sagernet/sing-box:v1.12.10"
+    build:
+      dockerfile: Dockerfile
+      args:
+        REDIRECT_PKG_HANDLER_VERSION: v0.12.2
+        SING_BOX_VERSION: v1.12.20
     container_name: "sing-box"
     ports:
       - "9090:9090"
@@ -18,8 +22,7 @@ services:
     privileged: true
     volumes:
       - "${LANDSCAPE_CONFIG_DIR}/unix_link/:/ld_unix_link/:ro"
-      - "./app:/app"
-    entrypoint: [ "/app/start.sh" ]
+      - "./app/server/sing-box:/app/server/sing-box"
     logging:
       driver: "json-file"
       options:
