@@ -30,7 +30,7 @@ services:
       - "8001:8001"
     volumes:
       - music:/app/media:rw
-      - ./data:/app/data
+      - ./music-tag-web-data:/app/data
     command: /start
     restart: unless-stopped
     logging:
