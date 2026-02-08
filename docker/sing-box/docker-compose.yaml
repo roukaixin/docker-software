@@ -1,12 +1,13 @@
-name: proxy
+name: application
 
 services:
   sing-box:
+    image: sing-box:${SING_BOX_VERSION}-${REDIRECT_PKG_HANDLER_VERSION}
     build:
       dockerfile: Dockerfile
       args:
-        REDIRECT_PKG_HANDLER_VERSION: v0.12.2
-        SING_BOX_VERSION: v1.12.20
+        REDIRECT_PKG_HANDLER_VERSION: ${REDIRECT_PKG_HANDLER_VERSION}
+        SING_BOX_VERSION: ${SING_BOX_VERSION}
     container_name: "sing-box"
     ports:
       - "9090:9090"
