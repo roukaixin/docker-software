@@ -1,0 +1,8 @@
+services:
+  ddns-go:
+    image: ghcr.io/jeessy2/ddns-go:v6.15.0
+    container_name: ddns-go
+    volumes:
+      - ./data:/root
+    restart: unless-stopped
+    network_mode: host
