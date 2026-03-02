@@ -21,7 +21,7 @@ services:
       - "--log.level=INFO"
       - "--accesslog=true"
       # 自动颁发证书
-      - "--certificatesresolvers.le.acme.email=your-email@gmain.com"
+      - "--certificatesresolvers.le.acme.email=${email}"
       - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
     ports:
@@ -31,14 +31,14 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
-      - "./letsencrypt:/letsencrypt"
+      - "./data/letsencrypt:/letsencrypt"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dashboard.rule=Host(`proxy.${domain}`)"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.tls=true"
-      - "traefik.http.middlewares.dashboard-auth.basicauth.users=admin:$$apr1$$9qxYYb1H$$FR/TdcSGc7Z/7rldthJ5g1"
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=${users}"
       - "traefik.http.routers.dashboard.middlewares=dashboard-auth@docker"
       # 解析证书
       - "traefik.http.routers.dashboard.tls.certresolver=le"
