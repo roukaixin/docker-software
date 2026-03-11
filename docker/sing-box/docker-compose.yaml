@@ -1,5 +1,5 @@
 include:
-  - ../commons/docker-compose-application-include.yaml
+  - ../_common/docker-compose-application-include.yaml
 
 services:
   sing-box:
