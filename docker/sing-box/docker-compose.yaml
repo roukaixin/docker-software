@@ -21,9 +21,11 @@ services:
       - BPF
       - PERFMON
     privileged: true
+    environment:
+      SERVER_RUN_WORK_DIR: ${SERVER_RUN_WORK_DIR}
     volumes:
       - "${LANDSCAPE_CONFIG_DIR}/unix_link/:/ld_unix_link/:ro"
-      - "./app/server/sing-box:/app/server/sing-box"
+      - "./data:${SERVER_RUN_WORK_DIR}"
     logging:
       driver: "json-file"
       options:
