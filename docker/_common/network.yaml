@@ -4,7 +4,7 @@ networks:
   homelab:
     name: homelab
     driver: bridge
-    labels:
+    driver_opts:
       com.docker.compose.network: homelab-br
     ipam:
       config:
