@@ -16,7 +16,7 @@ services:
       - "./cache:/cache"
       - "/usr/share/fonts:/usr/share/fonts:ro"
       - "./data:/media/jellyfin"
-      - "qbittorrent:/media/qbittorrent:z"
+      - "qbittorrent:/media/qbittorrent"
     restart: 'unless-stopped'
     ports:
       - "8096:8096"
