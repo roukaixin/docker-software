@@ -1,5 +1,8 @@
 name: homelab-services
 
+include:
+  - ../_common/network.yaml
+
 services:
   qinglong:
     image: "ghcr.io/whyour/qinglong:2.20.1"
@@ -9,7 +12,7 @@ services:
     ports:
       - "5700:5700"
     networks:
-      - homelab
+      homelab:
     restart: unless-stopped
     deploy:
       resources:
