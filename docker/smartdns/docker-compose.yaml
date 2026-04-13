@@ -1,4 +1,4 @@
-name: appplication
+name: homelab-services
 
 services:
   smartdns:

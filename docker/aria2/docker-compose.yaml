@@ -1,5 +1,8 @@
+name: homelab-services
+
 include:
-  - ../_common/docker-compose-application-include.yaml
+  - ../_common/network.yaml
+  - ../_common/volume.yaml
 
 services:
   aria2:

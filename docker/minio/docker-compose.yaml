@@ -1,4 +1,7 @@
-name: database
+name: homelab-services
+
+include:
+  - ../_common/network.yaml
 
 services:
   minio:

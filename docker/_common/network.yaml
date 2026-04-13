@@ -1,0 +1,13 @@
+
+# 网络配置 https://docs.docker.com/reference/compose-file/networks/#labels
+networks:
+  homelab:
+    name: homelab
+    driver: bridge
+    labels:
+      com.docker.compose.network: homelab-br
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          ip_range: 172.28.200.0/24
+          gateway: 172.28.200.254

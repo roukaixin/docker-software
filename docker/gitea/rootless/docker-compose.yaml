@@ -1,4 +1,7 @@
-name: application
+name: homelab-services
+
+include:
+  - ../../_common/network.yaml
 
 services:
   gitea:

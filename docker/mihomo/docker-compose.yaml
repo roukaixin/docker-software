@@ -1,4 +1,4 @@
-name: proxy
+name: homelab-services
 
 services:
   mihomo:

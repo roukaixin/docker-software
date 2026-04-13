@@ -1,4 +1,4 @@
-name: application
+name: homelab-services
 
 services:
     openlist:
