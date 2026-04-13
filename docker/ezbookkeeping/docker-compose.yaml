@@ -1,5 +1,8 @@
 name: homelab-services
 
+include:
+  - ../_common/network.yaml
+
 services:
   ezbookkeeping:
     container_name: ezbookkeeping
@@ -7,7 +10,7 @@ services:
     ports:
       - "${EBK_SERVER_HTTP_PORT}:${EBK_SERVER_HTTP_PORT}"
     networks:
-      - homelab
+      homelab:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "./data:/ezbookkeeping/data"
