@@ -9,6 +9,8 @@ services:
       - "60650:60650/tcp"
       - "60650:60650/udp"
       - "60680:8080"
+    networks:
+      - homelab
     volumes:
       - "./data:/data"
     environment:

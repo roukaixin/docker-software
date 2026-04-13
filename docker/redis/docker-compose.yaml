@@ -7,6 +7,8 @@ services:
     networks:
       - redis
     restart: unless-stopped
+    networks:
+      - homelab
     volumes:
       - ./data:/data
       - ./config:/usr/local/etc/redis

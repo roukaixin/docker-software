@@ -17,6 +17,8 @@ services:
       resources:
         limits:
           memory: 512M
+    networks:
+      - homelab
     volumes:
       - ./data:/opt/hive/data/warehouse
     restart: unless-stopped
@@ -42,6 +44,8 @@ services:
       resources:
         limits:
           memory: 512M
+    networks:
+      - homelab
     volumes:
       - type: bind
         source: ${POSTGRES_LOCAL_PATH}

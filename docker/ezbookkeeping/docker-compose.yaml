@@ -6,6 +6,8 @@ services:
     image: mayswind/ezbookkeeping:1.2
     ports:
       - "${EBK_SERVER_HTTP_PORT}:${EBK_SERVER_HTTP_PORT}"
+    networks:
+      - homelab
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "./data:/ezbookkeeping/data"

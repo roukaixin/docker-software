@@ -8,6 +8,8 @@ services:
       - "5672:5672"
       - "15672:15672"
     hostname: rabbitmq
+    networks:
+      - homelab
     volumes:
       - "./config:/etc/rabbitmq"
       - "./data:/var/lib/rabbitmq"

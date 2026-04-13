@@ -16,6 +16,8 @@ services:
       - "6800:6800"
       - "${LISTEN_PORT}:${LISTEN_PORT}"
       - "${DHT_LISTEN_PORT}:${DHT_LISTEN_PORT}/udp"
+    networks:
+      - homelab
     volumes:
       - "aria2:/aria2/download"
     restart: unless-stopped
@@ -33,6 +35,8 @@ services:
     restart: unless-stopped
     depends_on:
       - aria2
+    networks:
+      - homelab
     logging:
       driver: "json-file"
       options:

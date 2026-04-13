@@ -5,6 +5,8 @@ services:
     image: "triliumnext/trilium:v0.99.1"
     ports:
       - "9080:8080"
+    networks:
+      - homelab
     volumes:
       - "./data:/home/node/trilium-data"
       - "/etc/timezone:/etc/timezone:ro"

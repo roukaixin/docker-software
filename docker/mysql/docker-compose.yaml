@@ -4,6 +4,8 @@ services:
   mysql:
     image: mysql:9.2.0
     container_name: mysql
+    networks:
+      - homelab
     volumes:
       - ./data:/var/lib/mysql
     ports:

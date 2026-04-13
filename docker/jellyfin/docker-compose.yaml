@@ -8,6 +8,8 @@ services:
     image: "ghcr.io/jellyfin/jellyfin:10.11.3"
     container_name: "jellyfin"
     hostname: "jellyfin"
+    networks:
+      - homelab
     volumes:
       - "./config/jellyfin:/config"
       - "./cache:/cache"
@@ -37,6 +39,8 @@ services:
     container_name: "metatube"
     hostname: "metatube"
     restart: 'unless-stopped'
+    networks:
+      - homelab
     volumes:
       - ./config/metatube:/config
     environment:

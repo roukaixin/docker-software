@@ -9,6 +9,8 @@ services:
             TZ: "Asia/Shanghai"
             OPENLIST_ADMIN_PASSWORD: ${OPENLIST_ADMIN_PASSWORD}
             RUN_ARIA2: false
+        networks:
+            - homelab
         volumes:
             - "./data:/opt/openlist/data"
         ports:

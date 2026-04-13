@@ -4,6 +4,8 @@ services:
   redroid:
     image: redroid/redroid:11.0.0-240527
     container_name: "redroid"
+    networks:
+      - homelab
     volumes:
       - "./data:/data"
     ports:

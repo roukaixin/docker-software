@@ -8,6 +8,8 @@ services:
       - ./data:/ql/data
     ports:
       - "5700:5700"
+    networks:
+      - homelab
     restart: unless-stopped
     deploy:
       resources:
