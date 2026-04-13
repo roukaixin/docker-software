@@ -1,5 +1,8 @@
 name: homelab-services
 
+include:
+  - ../_common/network.yaml
+
 services:
   moviepilot:
     image: "ghcr.io/jxxghp/moviepilot:2.9.0"
