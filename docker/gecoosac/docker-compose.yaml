@@ -1,18 +1,16 @@
 services:
-  gecoosac:
-    image: "tearsful/gecoosac:V2"
-    container_name: "gecoosac"
+  gecoos-ac:
+    image: "adxing/gecoos-ac:v2.2"
+    container_name: "gecoos-ac"
     restart: unless-stopped
+    network_mode: "bridge"
     ports:
-      - "60650:60650/tcp"
-      - "60650:60650/udp"
-      - "60680:8080"
+      - "60650:60650"
+      - "${WEB_PORT}:${WEB_PORT}"
     volumes:
       - "./data:/data"
     environment:
-      UID: 0
-      GID: 0
-      GIDLIST: 0
+      mp: ${WEB_PORT}
     privileged: true
     logging:
       driver: "json-file"
