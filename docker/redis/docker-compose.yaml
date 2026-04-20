@@ -1,12 +1,15 @@
 name: homelab-services
 
+include:
+  - ../_common/network.yaml
+
 services:
   redis:
     image: redis:7.0.8
     container_name: redis
     restart: unless-stopped
     networks:
-      - homelab
+      homelab:
     volumes:
       - ./data:/data
       - ./config:/usr/local/etc/redis

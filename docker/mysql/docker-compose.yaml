@@ -1,11 +1,14 @@
 name: homelab-services
 
+include:
+  - ../_common/network.yaml
+
 services:
   mysql:
     image: mysql:9.2.0
     container_name: mysql
     networks:
-      - homelab
+      homelab:
     volumes:
       - ./data:/var/lib/mysql
     ports:
