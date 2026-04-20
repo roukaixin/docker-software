@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: windows-pod
+  labels:
+    app: win7
+spec:
+  containers:
+    - name: win7
+      image: ghcr.io/dockur/windows:5.12
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: VERSION
+          value: "7u"
+        - name: DISK_SIZE
+          value: "64G"
+        - name: USERNAME
+          value: "tnt"
+        - name: PASSWORD
+          value: "12345678"
+      ports:
+        - containerPort: 8006
+          name: http
+          protocol: TCP
+          hostPort: 8006
+        - containerPort: 3389
+          name: rdp
+          protocol: TCP
+          hostPort: 3389
+        - containerPort: 3389
+          name: udp
+          protocol: UDP
+          hostPort: 3389
+        - containerPort: 5900
+          name: vnc
+          protocol: TCP
+          hostPort: 5900
+      securityContext:
+        capabilities:
+          add:
+            - NET_ADMIN
+        privileged: true
+      volumeMounts:
+        - mountPath: /storage
+          name: storage
+        - mountPath: /dev/kvm
+          name: dev-kvm
+        - mountPath: /dev/net/tun
+          name: dev-tun
+  volumes:
+    - name: storage
+      hostPath:
+        path: ./data/win7
+        type: "DirectoryOrCreate"
+    - hostPath:
+        path: /dev/kvm
+      name: dev-kvm
+    - hostPath:
+        path: /dev/net/tun
+        type: CharDevice
+      name: dev-tun
+  restartPolicy: Always

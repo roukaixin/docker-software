@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ezbookkeeping-pod
+  labels:
+    app: ezbookkeeping-app
+spec:
+  containers:
+    - name: ezbookkeeping
+      image: mayswind/ezbookkeeping:1.2
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 80
+          protocol: TCP
+  restartPolicy: Always
