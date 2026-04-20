@@ -24,8 +24,4 @@ docker/jellyfin/metatube/config
 
 docker/dae/config
 
-docker/sing-box/app/server/sing-box/*
-!docker/sing-box/app/server/sing-box/
-!docker/sing-box/app/server/sing-box/config.json.template
-
 docker/ezbookkeeping/storage
