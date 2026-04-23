@@ -1,0 +1,13 @@
+services:
+  xiu:
+    image: harlancn/xiu:0.13.0
+    container_name: xiu
+    restart: unless-stopped
+    environment:
+      RUST_BACKTRACE: full
+    volumes:
+      - ./logs:/app/logs
+      - ./config/config.toml:/app/config.toml
+    command:
+      - /app/start.sh
+      - /app/config.toml
