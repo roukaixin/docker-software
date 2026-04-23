@@ -1,0 +1,32 @@
+name: homelab-services
+
+include:
+  - ../_common/network.yaml
+  - ../_common/volume.yaml
+
+services:
+  any-listen:
+    image: lyswhut/any-listen-web-server:0.8.0
+    container_name: any-listen
+    environment:
+      PORT: ${PORT}
+      LOGIN_PWD: ${LOGIN_PWD}
+      ALLOW_PUBLIC_DIR: /music
+    user: 1000:1000
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./data:/server/data
+      - music:/music
+    networks:
+      homelab:
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "2m"
+        max-file: "1"
