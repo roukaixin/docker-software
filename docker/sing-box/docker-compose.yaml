@@ -28,6 +28,3 @@ services:
       options:
         max-size: "2m"
         max-file: "1"
-    networks:
-      homelab:
-        ipv4_address: 172.28.200.100
