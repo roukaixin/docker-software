@@ -1,5 +1,3 @@
-name: homelab-services
-
 services:
   mihomo:
     image: "metacubex/mihomo:v1.19.15"
@@ -7,20 +5,19 @@ services:
     restart: unless-stopped
     sysctls:
       - net.ipv4.conf.lo.accept_local=1
-      - net.ipv6.conf.lo.accept_local=1
+      # - net.ipv6.conf.lo.accept_local=1
     cap_add:
       - NET_ADMIN
       - BPF
       - PERFMON
     privileged: true
     ports:
-      - "9093:9093"
-    networks:
-      - homelab
+      - "17890:7890"
+      - "19090:9090"
     volumes:
       - "${LANDSCAPE_CONFIG_DIR}/unix_link/:/ld_unix_link/:ro"
       - "./app:/app"
-    entrypoint: [ "/app/start.sh" ]
+    entrypoint: ["/app/start.sh"]
     logging:
       driver: "json-file"
       options:
