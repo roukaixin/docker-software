@@ -1,6 +1,11 @@
 services:
   mihomo:
-    image: "metacubex/mihomo:v1.19.28"
+    image: mihomo:${MIHOMO_VERSION}-${REDIRECT_PKG_HANDLER_VERSION}
+    build:
+      dockerfile: Dockerfile
+      args:
+        REDIRECT_PKG_HANDLER_VERSION: ${REDIRECT_PKG_HANDLER_VERSION}
+        MIHOMO_VERSION: ${MIHOMO_VERSION}
     container_name: "mihomo"
     restart: unless-stopped
     sysctls:
@@ -16,8 +21,7 @@ services:
       - "19090:9090"
     volumes:
       - "${LANDSCAPE_CONFIG_DIR}/unix_link/:/ld_unix_link/:ro"
-      - "./app:/app"
-    entrypoint: ["/app/start.sh"]
+      - "./data:/root/.config/mihomo"
     logging:
       driver: "json-file"
       options:

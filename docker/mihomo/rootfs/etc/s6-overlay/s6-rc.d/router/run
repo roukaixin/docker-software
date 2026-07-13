@@ -1,0 +1,3 @@
+#!/usr/bin/execlineb -P
+
+/redirect_pkg_handler
