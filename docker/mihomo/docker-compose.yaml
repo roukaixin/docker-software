@@ -19,6 +19,8 @@ services:
     ports:
       - "17890:7890"
       - "19090:9090"
+      - "1053:53"
+      - "1053:53/udp"
     volumes:
       - "${LANDSCAPE_CONFIG_DIR}/unix_link/:/ld_unix_link/:ro"
       - "./data:/root/.config/mihomo"
