@@ -1,3 +1,3 @@
 #!/usr/bin/execlineb -P
 
-/mihomo -d ${CONFIG_PATH:/root/.config/mihomo/}
+/mihomo -d /root/.config/mihomo
