@@ -1,7 +1,6 @@
-#!/usr/bin/with-contenv sh
+#!/usr/bin/execlineb -S0
 
-ip rule add fwmark 0x1/0x1 lookup 100
-ip route add local default dev lo table 100
-
-ip -6 rule add fwmark 0x1 lookup 106
-ip -6 route add local ::/0 dev lo table 106
+foreground { ip rule add fwmark 0x1/0x1 lookup 100 }
+foreground { ip route add local default dev lo table 100 }
+foreground { ip -6 rule add fwmark 0x1 lookup 106 }
+foreground { ip -6 route add local ::/0 dev lo table 106 }
