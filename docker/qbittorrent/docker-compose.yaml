@@ -1,12 +1,6 @@
-name: homelab-services
-
-include:
-  - ../_common/network.yaml
-  - ../_common/volume.yaml
-
 services:
   qbittorrent:
-    image: "ghcr.io/linuxserver/qbittorrent:5.1.4"
+    image: "ghcr.io/linuxserver/qbittorrent:5.2.3_v2.0.14-ls476"
     container_name: "qbittorrent"
     environment:
       - "PUID=1000"
@@ -15,8 +9,6 @@ services:
       - "TORRENTING_PORT=${TORRENTING_PORT}"
       - "TZ=Asia/Shanghai"
     restart: unless-stopped
-    networks:
-      homelab:
     volumes:
       - "qbittorrent:/downloads"
       - "./config:/config"
@@ -29,3 +21,11 @@ services:
       options:
         max-size: "2m"
         max-file: "1"
+
+volumes:
+  qbittorrent:
+    name: qbittorrent
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/.docker/volumes/qbittorrent
