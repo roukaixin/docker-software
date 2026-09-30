@@ -1,3 +1,0 @@
-#!/usr/bin/with-contenv sh
-
-sing-box -D "${WORK_DIR:-/sing-box}" -c "${CONFIG_FILE:-${WORK_DIR:-/sing-box}/config.json}" run
