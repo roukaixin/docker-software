@@ -1,12 +1,7 @@
-name: homelab-services
-
-include:
-  - ../_common/network.yaml
-
 services:
   ezbookkeeping:
     container_name: ezbookkeeping
-    image: mayswind/ezbookkeeping:1.2
+    image: mayswind/ezbookkeeping:2.0.1
     ports:
       - "${EBK_SERVER_HTTP_PORT}:${EBK_SERVER_HTTP_PORT}"
     networks:
