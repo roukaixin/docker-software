@@ -1,18 +1,11 @@
-name: homelab-services
-
-include:
-  - ../_common/network.yaml
-
 services:
   qinglong:
-    image: "ghcr.io/whyour/qinglong:2.20.1"
+    image: "ghcr.io/whyour/qinglong:2.22.0"
     container_name: "qinglong"
     volumes:
-      - ./data:/ql/data
+      - "./data:/ql/data"
     ports:
       - "5700:5700"
-    networks:
-      homelab:
     restart: unless-stopped
     deploy:
       resources:
