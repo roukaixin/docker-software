@@ -1,16 +1,16 @@
-name: homelab-services
-
 services:
   mtranserver:
-    image: xxnuo/mtranserver
+    image: ghcr.io/xxnuo/mtranserver:4.0.33
     container_name: mtranserver
     restart: unless-stopped
     ports:
-      - "8989:8989"
+      - "${MT_PORT}:${MT_PORT}"
     environment:
-      API_TOKEN: ${API_TOKEN}
-    volumes:
-      - "./models:/app/models"
+      MT_HOST: 0.0.0.0
+      MT_PORT: "${MT_PORT}"
+      MT_OFFLINE: false
+      MT_API_TOKEN: ${MT_API_TOKEN}
+      MT_LOG_LEVEL: debug
     logging:
       driver: "json-file"
       options:
