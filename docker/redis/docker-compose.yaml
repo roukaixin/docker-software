@@ -1,24 +1,17 @@
-name: homelab-services
-
-include:
-  - ../_common/network.yaml
-
 services:
   redis:
-    image: redis:7.0.8
+    image: redis:7.0.8-alpine
     container_name: redis
     restart: unless-stopped
-    networks:
-      homelab:
     volumes:
-      - ./data:/data
+      - "./data:/data"
     ports:
-      - "127.0.0.1:6379:6379"
+      - "6379:6379"
     deploy:
       resources:
         limits:
           memory: 256M
-    command: ["redis-server", "--requirepass 12345678"]
+    command: ["redis-server", "--requirepass ${require_pass}", "--appendonly yes", "--appendfsync everysec"]
     logging:
       driver: "json-file"
       options:
