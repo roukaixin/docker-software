@@ -1,11 +1,6 @@
-name: homelab-services
-
-include:
-  - ../_common/network.yaml
-
 services:
   moviepilot:
-    image: "ghcr.io/jxxghp/moviepilot:2.9.0"
+    image: "ghcr.io/jxxghp/moviepilot:3.1.0"
     stdin_open: true
     tty: true
     container_name: moviepilot
@@ -13,8 +8,6 @@ services:
     ports:
       - '3000:3000'
       - '3001:3001'
-    networks:
-      - homelab
     volumes:
       - './data/media:/media'
       - './config:/config'
@@ -29,9 +22,7 @@ services:
       SUPERUSER: admin
       MOVIEPILOT_AUTO_UPDATE: false
       AUTO_UPDATE_RESOURCE: true
-      HTTP_PROXY: http://host.docker.internal:7890
-      HTTPS_PROXY: http://host.docker.internal:7890
-      NO_PROXY: localhost,127.0.0.1
+      PROXY_HOST: http://host.docker.internal:7890
     restart: unless-stopped
     logging:
       driver: "json-file"
