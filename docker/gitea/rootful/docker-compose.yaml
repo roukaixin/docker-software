@@ -1,20 +1,15 @@
-name: homelab-services
-
-include:
-  - ../../_common/network.yaml
-
+name: gitea
 services:
   gitea:
-    image: gitea/gitea:1.26.0
-    container_name: gitea
+    image: gitea/gitea:28.0.0
+    container_name: ${GITEA__CONTAINER_NAME}
     environment:
-      USER: ${USER}
       USER_UID: 1000
       USER_GID: 1000
+      GITEA_CUSTOM: /custom
       GITEA__server__DOMAIN: ${DOMAIN}
       GITEA__server__SSH_DOMAIN: ${DOMAIN}
-      GITEA__server__HTTP_PORT: 3000
-      GITEA__server__ROOT_URL: ${ROOT_URL}
+      GITEA__server__HTTP_PORT: ${GITEA__HTTP_PORT}
       GITEA__server__SSH_PORT: ${SSH_PORT}
       GITEA__server__SSH_LISTEN_PORT: ${SSH_LISTEN_PORT}
       GITEA__server__BUILTIN_SSH_SERVER_USER: git
@@ -23,10 +18,6 @@ services:
       GITEA__server__LANDING_PAGE: explore
       GITEA__server__OFFLINE_MODE: true
       GITEA__database__DB_TYPE: ${DB_TYPE}
-      GITEA__database__HOST: ${DB_HOST}
-      GITEA__database__NAME: ${DB_NAME}
-      GITEA__database__USER: ${DB_USER}
-      GITEA__database__PASSWD: ${DB_PASSWD}
       GITEA__database__LOG_SQL: false
       GITEA__database__SSL_MODE: false
       GITEA__security__INSTALL_LOCK: true
@@ -46,10 +37,11 @@ services:
       GITEA__openid__ENABLE_OPENID_SIGNIN: false
       GITEA__openid__ENABLE_OPENID_SIGNUP: false
       GITEA__storage__STORAGE_TYPE: minio
-      GITEA__storage__MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      GITEA__storage__MINIO_ENDPOINT: ${STORAGE__CONTAINER_NAME}${STORAGE__RUSTFS_ADDRESS}
       GITEA__storage__MINIO_BUCKET: ${MINIO_BUCKET}
-      GITEA__storage__MINIO_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY_ID}
-      GITEA__storage__MINIO_SECRET_ACCESS_KEY: ${MINIO_SECRET_ACCESS_KEY}
+      GITEA__storage__MINIO_ACCESS_KEY_ID: ${STORAGE__RUSTFS_ACCESS_KEY}
+      GITEA__storage__MINIO_SECRET_ACCESS_KEY: ${STORAGE__RUSTFS_SECRET_KEY}
+      GITEA__repository__ROOT: "repo"
       GITEA__repository.upload__FILE_MAX_SIZE: ${UPLOAD_FILE_MAX_SIZE}
       GITEA__i18n__LANGS: en-US,zh-CN
       GITEA__i18n__NAMES: English,简体中文
@@ -65,29 +57,27 @@ services:
       GITEA__repository.pull-request__DEFAULT_MERGE_STYLE: merge
       GITEA__repository.signing__DEFAULT_TRUST_MODEL: committer
       GITEA__mailer__ENABLED: false
-      GITEA__cache__ADAPTER: redis
-      GITEA__cache__HOST: addrs=${REDIS_HOST} password=${REDIS_PASSWORD} db=${REDIS_DB}
-      GITEA__session__PROVIDER: redis
-      GITEA__session__PROVIDER_CONFIG: addrs=${REDIS_HOST} password=${REDIS_PASSWORD} db=${REDIS_DB}
-      GITEA__queue__TYPE: redis
-      GITEA__queue__CONN_STR: addrs=${REDIS_HOST} password=${REDIS_PASSWORD} db=${REDIS_DB}
+      GITEA__session__PROVIDER: db
+      GITEA__queue__TYPE: level
       GITEA_RUNNER_REGISTRATION_TOKEN: ${RUNNER_REGISTRATION_TOKEN}
     ports:
-      - "${HTTP_PORT}:3000"
+      - "${GITEA__HTTP_PORT}:${GITEA__HTTP_PORT}"
       - "${SSH_PORT}:22"
-    networks:
-      homelab:
     volumes:
-      - ./data/gitea:/data
+      - ./data/gitea/work:/data/gitea
+      - ./data/gitea/custom:/custom
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://127.0.0.1:3000" ]
-      interval: 30s
+      test: [ "CMD", "curl", "-f", "http://127.0.0.1:${GITEA__HTTP_PORT}" ]
+      interval: 5s
       timeout: 2s
-      start_period: 3s
-      retries: 1
+      start_period: 5s
+      retries: 3
+    depends_on:
+      rustfs:
+        condition: service_healthy
     logging:
       driver: "json-file"
       options:
@@ -95,21 +85,21 @@ services:
         max-file: "1"
 
   act_runner:
-    image: gitea/act_runner:0.4.1
-    container_name: act_runner
+    image: gitea/runner:4.0.1-dind
+    container_name: ${RUNNER__CONTAINER_NAME}
     environment:
       CONFIG_FILE: /config.yaml
-      GITEA_INSTANCE_URL: http://gitea:3000/
+      GITEA_INSTANCE_URL: http://${GITEA__CONTAINER_NAME}:${GITEA__HTTP_PORT}
       GITEA_RUNNER_REGISTRATION_TOKEN: ${RUNNER_REGISTRATION_TOKEN}
       GITEA_RUNNER_NAME: ${RUNNER_NAME}
     volumes:
       - ./config/config.yaml:/config.yaml:ro
       - ./data/runner:/data:rw
-      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       gitea:
         condition: service_healthy
     restart: unless-stopped
+    privileged: true
     deploy:
       resources:
         limits:
@@ -119,3 +109,30 @@ services:
       options:
         max-size: "2m"
         max-file: "1"
+
+  rustfs:
+    image: ghcr.io/rustfs/rustfs:1.0.1
+    container_name: ${STORAGE__CONTAINER_NAME}
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: ${STORAGE__RUSTFS_ACCESS_KEY}
+      RUSTFS_SECRET_KEY: ${STORAGE__RUSTFS_SECRET_KEY}
+      RUSTFS_ADDRESS: ${STORAGE__RUSTFS_ADDRESS}
+      RUSTFS_CONSOLE_ENABLE: "false"
+      RUSTFS_OBS_LOGGER_LEVEL: info
+      RUSTFS_VOLUMES: /data/rustfs{0...3}
+      RUSTFS_UNSAFE_BYPASS_DISK_CHECK: "true"
+      RUSTFS_CORS_ALLOWED_ORIGINS: "*"
+    healthcheck:
+      test: [ "CMD", "sh", "-ec", "curl http://127.0.0.1${STORAGE__RUSTFS_ADDRESS}/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - "rustfs:/data"
+
+volumes:
+  rustfs:
+    name: rustfs
+    external: true
