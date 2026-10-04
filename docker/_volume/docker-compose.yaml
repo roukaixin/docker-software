@@ -1,0 +1,45 @@
+name: volume-init
+
+services:
+  volume-init:
+    image: ghcr.io/loong64/busybox:1.38
+    container_name: "volume-init"
+    volumes:
+      - aria2:/aria2
+      - music:/music
+      - qbittorrent:/qbittorrent
+      - jellyfin:/jellyfin
+      - rustfs:/rustfs
+    restart: unless-stopped
+
+volumes:
+  aria2:
+    name: aria2
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/.docker/volumes/aria2
+  music:
+    name: music
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/.docker/volumes/music
+  qbittorrent:
+    name: qbittorrent
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/.docker/volumes/qbittorrent
+  jellyfin:
+    name: jellyfin
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/.docker/volumes/jellyfin
+  rustfs:
+    name: rustfs
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/.docker/volumes/rustfs
