@@ -25,7 +25,4 @@ services:
 volumes:
   qbittorrent:
     name: qbittorrent
-    driver_opts:
-      type: none
-      o: bind
-      device: ${HOME}/.docker/volumes/qbittorrent
+    external: true
