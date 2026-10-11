@@ -50,14 +50,8 @@ services:
 volumes:
   jellyfin:
     name: jellyfin
-    driver_opts:
-      type: none
-      o: bind
-      device: ${HOME}/.docker/volumes/jellyfin
+    external: true
 
   qbittorrent:
     name: qbittorrent
-    driver_opts:
-      type: none
-      o: bind
-      device: ${HOME}/.docker/volumes/qbittorrent
+    external: true
