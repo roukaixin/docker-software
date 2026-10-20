@@ -1,6 +1,6 @@
 services:
   moviepilot:
-    image: "ghcr.io/jxxghp/moviepilot:3.1.0"
+    image: "ghcr.io/jxxghp/moviepilot:3.1.8"
     stdin_open: true
     tty: true
     container_name: moviepilot
@@ -24,6 +24,7 @@ services:
       AUTO_UPDATE_RESOURCE: true
       PROXY_HOST: http://host.docker.internal:7890
     restart: unless-stopped
+    stop_grace_period: 120s
     logging:
       driver: "json-file"
       options:
