@@ -10,7 +10,6 @@ services:
       - qbittorrent:/qbittorrent
       - jellyfin:/jellyfin
       - rustfs:/rustfs
-    restart: unless-stopped
 
 volumes:
   aria2:
